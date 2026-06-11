@@ -21,6 +21,7 @@ Pipeline: **select a use case → generate test cases → execute via Playwright
 The `srs/` and `new-feature-srs/` folders ship **empty** — drop your real
 documents in. Nothing here invents requirements.
 
+> **Why this framework?** See **[OVERVIEW.md](OVERVIEW.md)** — the problems it solves and who it's for.
 > New here? Start with **[QUICKSTART.md](QUICKSTART.md)** — zero to first tested use case.
 
 ## Prerequisites
