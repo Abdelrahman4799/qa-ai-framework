@@ -1,0 +1,13 @@
+# Runtime artifacts and evidence — not source of truth
+.qa-state/
+
+# Raw dropped Word SRS — source material, not the requirements the AI reads
+docs/ai/srs/_inbox/*.docx
+docs/ai/new-feature-srs/_inbox/*.docx
+docs/ai/srs/_full.md
+docs/ai/new-feature-srs/_full.md
+
+# Never commit tokens or secrets
+*.pat
+*.token
+.env

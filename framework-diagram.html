@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI QA Framework — Visual Map</title>
+<style>
+  body { margin:0; background:#0f172a; color:#e2e8f0;
+         font-family:"Segoe UI",Roboto,Arial,sans-serif; }
+  .wrap { max-width:1240px; margin:0 auto; padding:24px 16px 60px; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  .sub { color:#94a3b8; margin:0 0 20px; font-size:15px; }
+  .card { background:#111827; border:1px solid #1f2937; border-radius:14px;
+          padding:14px; margin-bottom:22px; }
+  svg { width:100%; height:auto; display:block; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:13px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .sw { width:16px; height:16px; border-radius:4px; display:inline-block; }
+  h2 { font-size:18px; margin:22px 0 10px; color:#f1f5f9; }
+  ul { margin:6px 0 0; padding-left:20px; line-height:1.55; font-size:14px; color:#cbd5e1; }
+  code { background:#1e293b; padding:1px 6px; border-radius:5px; color:#7dd3fc; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI QA Framework — Visual Map</h1>
+  <p class="sub">Requirements-driven, black-box testing · Playwright MCP · Azure DevOps · enforced by hooks</p>
+
+  <!-- ======================= PIPELINE ======================= -->
+  <div class="card">
+  <svg viewBox="0 0 1200 1000" role="img" aria-label="Pipeline diagram">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L9,3 L0,6 Z" fill="#94a3b8"/>
+      </marker>
+      <marker id="arrowG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L9,3 L0,6 Z" fill="#34d399"/>
+      </marker>
+      <marker id="arrowA" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L9,3 L0,6 Z" fill="#fbbf24"/>
+      </marker>
+      <style>
+        .stage{fill:#0d9488;stroke:#5eead4;stroke-width:1.5;}
+        .staget{fill:#ecfeff;font-weight:600;}
+        .num{fill:#99f6e4;font-weight:700;}
+        .input{fill:#1d4ed8;stroke:#93c5fd;stroke-width:1.5;}
+        .inputt{fill:#eff6ff;font-weight:600;}
+        .gate{fill:#b45309;stroke:#fbbf24;stroke-width:2;}
+        .gatet{fill:#fffbeb;font-weight:700;}
+        .store{fill:#1f2937;stroke:#6b7280;stroke-width:1.5;}
+        .storet{fill:#cbd5e1;}
+        .ext{fill:#6d28d9;stroke:#c4b5fd;stroke-width:1.5;}
+        .extt{fill:#f5f3ff;font-weight:700;}
+        .edge{stroke:#94a3b8;stroke-width:2;fill:none;}
+        .edgeG{stroke:#34d399;stroke-width:2.5;fill:none;}
+        .edgeA{stroke:#fbbf24;stroke-width:2.5;fill:none;}
+        .edgeD{stroke:#64748b;stroke-width:2;fill:none;stroke-dasharray:6 5;}
+        .lbl{fill:#cbd5e1;font-size:12px;}
+        .small{font-size:11.5px;}
+        text{font-family:"Segoe UI",Arial,sans-serif;font-size:13px;}
+      </style>
+    </defs>
+
+    <!-- INPUTS -->
+    <rect class="input" x="40" y="30" width="230" height="58" rx="10"/>
+    <text class="inputt" x="155" y="54" text-anchor="middle">Existing SRS</text>
+    <text class="lbl" x="155" y="74" text-anchor="middle">docs/ai/srs/</text>
+
+    <rect class="input" x="640" y="30" width="250" height="58" rx="10"/>
+    <text class="inputt" x="765" y="54" text-anchor="middle">New-feature SRS</text>
+    <text class="lbl" x="765" y="74" text-anchor="middle">docs/ai/new-feature-srs/</text>
+
+    <!-- PIPELINE STAGES (center column x=320..600) -->
+    <!-- 1 index-srs -->
+    <rect class="stage" x="320" y="140" width="300" height="62" rx="10"/>
+    <text class="num" x="338" y="166">1</text>
+    <text class="staget" x="470" y="166" text-anchor="middle">index-srs</text>
+    <text class="lbl small" x="470" y="186" text-anchor="middle">read full SRS ONCE → build UC catalog</text>
+
+    <!-- 2 generate -->
+    <rect class="stage" x="320" y="252" width="300" height="74" rx="10"/>
+    <text class="num" x="338" y="278">2</text>
+    <text class="staget" x="470" y="278" text-anchor="middle">generate-test-cases</text>
+    <text class="lbl small" x="470" y="296" text-anchor="middle">SELECT one UC · discover related</text>
+    <text class="lbl small" x="470" y="312" text-anchor="middle">CONFIRM · cases + regression set</text>
+
+    <!-- 3 execute -->
+    <rect class="stage" x="320" y="368" width="300" height="74" rx="10"/>
+    <text class="num" x="338" y="394">3</text>
+    <text class="staget" x="470" y="394" text-anchor="middle">execute-test-cases</text>
+    <text class="lbl small" x="470" y="412" text-anchor="middle">Playwright MCP · real browser</text>
+    <text class="lbl small" x="470" y="428" text-anchor="middle">PASS / FAIL / BLOCKED / FLAKY</text>
+
+    <!-- 4 triage -->
+    <rect class="stage" x="320" y="484" width="300" height="62" rx="10"/>
+    <text class="num" x="338" y="510">4</text>
+    <text class="staget" x="470" y="510" text-anchor="middle">triage-defect</text>
+    <text class="lbl small" x="470" y="530" text-anchor="middle">FAIL vs SRS → classified bug</text>
+
+    <!-- 5 review GATE -->
+    <rect class="gate" x="320" y="588" width="300" height="64" rx="10"/>
+    <text class="gatet" x="470" y="614" text-anchor="middle">5 · review-results — GATE</text>
+    <text class="gatet" x="470" y="636" text-anchor="middle" font-size="12">human approval → writes marker</text>
+
+    <!-- 6 upload -->
+    <rect class="stage" x="320" y="694" width="300" height="62" rx="10"/>
+    <text class="num" x="338" y="720">6</text>
+    <text class="staget" x="470" y="720" text-anchor="middle">upload-to-devops</text>
+    <text class="lbl small" x="470" y="740" text-anchor="middle">REST + PAT · Test Case + Bug</text>
+
+    <!-- 7 promote -->
+    <rect class="stage" x="320" y="806" width="300" height="62" rx="10"/>
+    <text class="num" x="338" y="832">7</text>
+    <text class="staget" x="470" y="832" text-anchor="middle">promote-to-srs</text>
+    <text class="lbl small" x="470" y="852" text-anchor="middle">accepted new UC → baseline SRS</text>
+
+    <!-- STORES (right column x=720..1140) -->
+    <rect class="store" x="720" y="142" width="420" height="58" rx="10"/>
+    <text class="storet" x="930" y="166" text-anchor="middle">srs/_index.md</text>
+    <text class="storet small" x="930" y="186" text-anchor="middle">+ _fingerprint.json (stale-index check)</text>
+
+    <rect class="store" x="720" y="259" width="420" height="60" rx="10"/>
+    <text class="storet" x="930" y="283" text-anchor="middle">test-cases/UC-xx/</text>
+    <text class="storet small" x="930" y="303" text-anchor="middle">traceability.md · coverage.md</text>
+
+    <rect class="store" x="720" y="375" width="420" height="60" rx="10"/>
+    <text class="storet" x="930" y="399" text-anchor="middle">.qa-state/runs/&lt;id&gt;/</text>
+    <text class="storet small" x="930" y="419" text-anchor="middle">screenshots · RUN-REPORT.md</text>
+
+    <rect class="store" x="720" y="590" width="420" height="60" rx="10"/>
+    <text class="storet" x="930" y="614" text-anchor="middle">.qa-state/review-passed.json</text>
+    <text class="storet small" x="930" y="634" text-anchor="middle">the gate marker the upload hook checks</text>
+
+    <rect class="ext" x="720" y="700" width="420" height="58" rx="10"/>
+    <text class="extt" x="930" y="734" text-anchor="middle">Azure DevOps  (work items)</text>
+
+    <!-- EDGES: inputs -> stages -->
+    <path class="edge" d="M155,88 L155,171 L318,171" marker-end="url(#arrow)"/>
+    <path class="edge" d="M765,88 L765,180 L660,180 L660,289 L622,289" marker-end="url(#arrow)"/>
+
+    <!-- vertical pipeline edges -->
+    <path class="edge" d="M470,202 L470,250" marker-end="url(#arrow)"/>
+    <path class="edge" d="M470,326 L470,366" marker-end="url(#arrow)"/>
+    <path class="edge" d="M470,442 L470,482" marker-end="url(#arrow)"/>
+    <path class="edge" d="M470,546 L470,586" marker-end="url(#arrow)"/>
+    <!-- gate pass -->
+    <path class="edgeA" d="M470,652 L470,692" marker-end="url(#arrowA)"/>
+    <text class="lbl" x="482" y="676">pass</text>
+    <!-- gate fail loop -->
+    <path class="edgeD" d="M320,620 L250,620 L250,515 L318,515" marker-end="url(#arrow)"/>
+    <text class="lbl" x="196" y="566">fail:</text>
+    <text class="lbl" x="186" y="582">re-review</text>
+    <!-- upload -> promote -->
+    <path class="edge" d="M470,756 L470,804" marker-end="url(#arrow)"/>
+
+    <!-- stage -> store edges -->
+    <path class="edge" d="M620,171 L718,171" marker-end="url(#arrow)"/>
+    <path class="edge" d="M620,289 L718,289" marker-end="url(#arrow)"/>
+    <path class="edge" d="M620,405 L718,405" marker-end="url(#arrow)"/>
+    <path class="edgeA" d="M620,620 L718,620" marker-end="url(#arrowA)"/>
+    <path class="edge" d="M620,725 L718,729" marker-end="url(#arrow)"/>
+
+    <!-- promote feedback to baseline SRS (far left dashed) -->
+    <path class="edgeD" d="M320,837 L40,837 L40,88 L120,88" marker-end="url(#arrow)"/>
+    <text class="lbl" x="50" y="470" transform="rotate(-90 50,470)">promote: accepted feature becomes living baseline</text>
+
+    <!-- token note -->
+    <text class="lbl" x="930" y="470" text-anchor="middle" font-style="italic">Full SRS is read only here (stage 1, once).</text>
+    <text class="lbl" x="930" y="488" text-anchor="middle" font-style="italic">Every run after reads one UC section + related.</text>
+  </svg>
+
+  <div class="legend">
+    <span><i class="sw" style="background:#1d4ed8"></i>Input you provide</span>
+    <span><i class="sw" style="background:#0d9488"></i>Pipeline skill (stage)</span>
+    <span><i class="sw" style="background:#b45309"></i>Human review gate</span>
+    <span><i class="sw" style="background:#1f2937;border:1px solid #6b7280"></i>Persisted artifact</span>
+    <span><i class="sw" style="background:#6d28d9"></i>External system</span>
+    <span><i class="sw" style="background:#fbbf24"></i>Gated-by-approval path</span>
+  </div>
+  </div>
+
+  <!-- ======================= ENFORCEMENT ======================= -->
+  <div class="card">
+  <svg viewBox="0 0 1200 360" role="img" aria-label="Enforcement hooks">
+    <defs>
+      <style>
+        .hook{fill:#7f1d1d;stroke:#f87171;stroke-width:1.5;}
+        .hookt{fill:#fee2e2;font-weight:600;}
+        .trig{fill:#0b3b6f;stroke:#60a5fa;stroke-width:1.5;}
+        .trigt{fill:#dbeafe;font-weight:600;}
+        .deny{fill:#991b1b;}
+      </style>
+    </defs>
+    <text x="20" y="28" fill="#f1f5f9" font-size="17" font-weight="700">Enforcement — hooks run outside the model (deterministic)</text>
+
+    <!-- triggers -->
+    <rect class="trig" x="20" y="55" width="250" height="50" rx="9"/>
+    <text class="trigt" x="145" y="85" text-anchor="middle">On every prompt</text>
+    <rect class="trig" x="20" y="160" width="250" height="50" rx="9"/>
+    <text class="trigt" x="145" y="190" text-anchor="middle">Before any shell call</text>
+    <rect class="trig" x="20" y="265" width="250" height="50" rx="9"/>
+    <text class="trigt" x="145" y="295" text-anchor="middle">Before any Edit / Write</text>
+
+    <!-- hooks -->
+    <rect class="hook" x="330" y="48" width="270" height="44" rx="8"/>
+    <text class="hookt" x="465" y="75" text-anchor="middle">inject_reminder</text>
+    <rect class="hook" x="330" y="100" width="270" height="44" rx="8"/>
+    <text class="hookt" x="465" y="127" text-anchor="middle">srs_fingerprint (stale warn)</text>
+
+    <rect class="hook" x="330" y="158" width="270" height="44" rx="8"/>
+    <text class="hookt" x="465" y="185" text-anchor="middle">guard_upload</text>
+    <rect class="hook" x="330" y="210" width="270" height="44" rx="8"/>
+    <text class="hookt" x="465" y="237" text-anchor="middle">scan_secrets</text>
+
+    <rect class="hook" x="330" y="268" width="270" height="44" rx="8"/>
+    <text class="hookt" x="465" y="295" text-anchor="middle">guard_selfheal</text>
+
+    <!-- outcomes -->
+    <rect class="deny" x="660" y="158" width="250" height="44" rx="8"/>
+    <text class="hookt" x="785" y="185" text-anchor="middle">DENY upload w/o review marker</text>
+    <rect class="deny" x="660" y="210" width="250" height="44" rx="8"/>
+    <text class="hookt" x="785" y="237" text-anchor="middle">DENY if PAT inline</text>
+    <rect class="deny" x="660" y="268" width="250" height="44" rx="8"/>
+    <text class="hookt" x="785" y="295" text-anchor="middle">DENY rule edit w/o approval</text>
+
+    <text x="960" y="120" fill="#94a3b8" font-size="13">All hooks fail OPEN —</text>
+    <text x="960" y="140" fill="#94a3b8" font-size="13">a missing file or parse</text>
+    <text x="960" y="160" fill="#94a3b8" font-size="13">error means allow + no</text>
+    <text x="960" y="180" fill="#94a3b8" font-size="13">warning, never a block.</text>
+
+    <!-- connectors -->
+    <line x1="270" y1="80" x2="330" y2="70" stroke="#475569" stroke-width="1.5"/>
+    <line x1="270" y1="80" x2="330" y2="122" stroke="#475569" stroke-width="1.5"/>
+    <line x1="270" y1="185" x2="330" y2="180" stroke="#475569" stroke-width="1.5"/>
+    <line x1="270" y1="185" x2="330" y2="232" stroke="#475569" stroke-width="1.5"/>
+    <line x1="270" y1="290" x2="330" y2="290" stroke="#475569" stroke-width="1.5"/>
+    <line x1="600" y1="180" x2="660" y2="180" stroke="#475569" stroke-width="1.5"/>
+    <line x1="600" y1="232" x2="660" y2="232" stroke="#475569" stroke-width="1.5"/>
+    <line x1="600" y1="290" x2="660" y2="290" stroke="#475569" stroke-width="1.5"/>
+  </svg>
+  </div>
+
+  <h2>How to read it</h2>
+  <ul>
+    <li><b>Top diagram = the pipeline.</b> A single chosen use case flows top-to-bottom: index once → generate → execute in a real browser → triage failures → <b>review gate</b> → upload to Azure DevOps → promote back into the baseline SRS (left dashed feedback line).</li>
+    <li><b>Right column = what persists</b> between sessions. Downstream stages read these, not the SRS.</li>
+    <li><b>Amber path</b> is gated: nothing reaches Azure DevOps until the review gate writes <code>review-passed.json</code>.</li>
+    <li><b>Bottom diagram = enforcement.</b> Five hooks run outside the model and can DENY an action — they turn "please follow the rules" into rules that hold.</li>
+    <li><b>Token efficiency:</b> the full SRS is read only at stage 1 (once). Every test run reads tiny index files plus one use-case section and its confirmed related sections.</li>
+  </ul>
+</div>
+</body>
+</html>
