@@ -15,7 +15,7 @@ $p = $path -replace '/', '\'
 $governed = $false
 if ($p -match '\\AGENTS\.md$') { $governed = $true }
 if ($p -match '\\CLAUDE\.md$') { $governed = $true }
-if ($p -match '\\\.agents\\skills\\') { $governed = $true }
+if ($p -match '\\\.claude\\skills\\') { $governed = $true }
 if ($p -match '\\docs\\ai\\(test-case-standards|execution-policy|defect-policy|glossary)\.md$') { $governed = $true }
 
 if (-not $governed) { exit 0 }

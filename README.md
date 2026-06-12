@@ -117,7 +117,7 @@ with a before→after diff at a natural checkpoint. It **applies** the change on
 after your approval, records it in `docs/ai/improvements-log.md`, and can never
 weaken a safety rule (review gate, no PII, no PAT, no production). You can always
 hand-edit any file yourself — the gate only governs the AI's tool-driven edits.
-See `.agents/skills/self-heal/SKILL.md`.
+See `.claude/skills/self-heal/SKILL.md`.
 
 ## Layout
 
@@ -127,7 +127,7 @@ docs/ai/         context + policies + SRS (baseline) + new-feature SRS
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
-.agents/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
+.claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
                  review, upload, coverage, promote, self-heal, save-session (13)
 .claude/         hooks (6) + settings
 scripts/         ingest_srs.ps1, doctor.ps1
@@ -143,4 +143,4 @@ scripts/         ingest_srs.ps1, doctor.ps1
   audit trail, read only on demand.
 
 At session end, run save-session (or say "save the session"): it appends the full
-record and refreshes `handoff.md`. See `.agents/skills/save-session/SKILL.md`.
+record and refreshes `handoff.md`. See `.claude/skills/save-session/SKILL.md`.

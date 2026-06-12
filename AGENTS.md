@@ -35,19 +35,19 @@ the use case in scope.
 
 Use only the relevant skill:
 
-- Guided onboarding (fill the config TBDs one by one) → `.agents/skills/setup-wizard/SKILL.md`
-- Health-check the framework setup → `.agents/skills/doctor/SKILL.md`
-- Ingest a Word (.docx) SRS → split into per-use-case files → `.agents/skills/ingest-srs/SKILL.md`
-- Build the use-case index (once per baseline) → `.agents/skills/index-srs/SKILL.md`
-- Generate test cases for a chosen use case → `.agents/skills/generate-test-cases/SKILL.md`
-- Execute test cases in the app → `.agents/skills/execute-test-cases/SKILL.md`
-- Report requirement/use-case coverage → `.agents/skills/coverage-report/SKILL.md`
-- Triage / log a defect → `.agents/skills/triage-defect/SKILL.md`
-- Review results before upload → `.agents/skills/review-results/SKILL.md`
-- Upload to Azure DevOps → `.agents/skills/upload-to-devops/SKILL.md`
-- Promote an accepted new use case into the baseline SRS → `.agents/skills/promote-to-srs/SKILL.md`
-- Propose & apply an approved improvement to the framework → `.agents/skills/self-heal/SKILL.md`
-- Save session history at the end of a session → `.agents/skills/save-session/SKILL.md`
+- Guided onboarding (fill the config TBDs one by one) → `.claude/skills/setup-wizard/SKILL.md`
+- Health-check the framework setup → `.claude/skills/doctor/SKILL.md`
+- Ingest a Word (.docx) SRS → split into per-use-case files → `.claude/skills/ingest-srs/SKILL.md`
+- Build the use-case index (once per baseline) → `.claude/skills/index-srs/SKILL.md`
+- Generate test cases for a chosen use case → `.claude/skills/generate-test-cases/SKILL.md`
+- Execute test cases in the app → `.claude/skills/execute-test-cases/SKILL.md`
+- Report requirement/use-case coverage → `.claude/skills/coverage-report/SKILL.md`
+- Triage / log a defect → `.claude/skills/triage-defect/SKILL.md`
+- Review results before upload → `.claude/skills/review-results/SKILL.md`
+- Upload to Azure DevOps → `.claude/skills/upload-to-devops/SKILL.md`
+- Promote an accepted new use case into the baseline SRS → `.claude/skills/promote-to-srs/SKILL.md`
+- Propose & apply an approved improvement to the framework → `.claude/skills/self-heal/SKILL.md`
+- Save session history at the end of a session → `.claude/skills/save-session/SKILL.md`
 
 ## Work Rules
 
@@ -94,7 +94,7 @@ Use only the relevant skill:
   before→after diff, the reason, and a safety check.
 - You MAY improve: this file, `CLAUDE.md`, the methodology policies
   (`test-case-standards.md`, `execution-policy.md`, `defect-policy.md`,
-  `glossary.md`), and the skills in `.agents/skills/`.
+  `glossary.md`), and the skills in `.claude/skills/`.
 - You MUST NOT self-edit: SRS content / requirements (use promote-to-srs) or the
   user's project config (`context.md`, `devops-policy.md`).
 - You MUST NEVER weaken a safety rule (review gate, no real PII, no PAT exposure,

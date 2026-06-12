@@ -13,7 +13,7 @@ after the user approves.
 - MAY improve (governed framework files): `AGENTS.md`, `CLAUDE.md`, the
   methodology policies in `docs/ai/` (`test-case-standards.md`,
   `execution-policy.md`, `defect-policy.md`, `glossary.md`), and the skills in
-  `.agents/skills/`.
+  `.claude/skills/`.
 - MUST NOT self-edit: SRS content / requirements (that goes through
   `promote-to-srs`) or the user's project config (`context.md`,
   `devops-policy.md` — the user owns those).
