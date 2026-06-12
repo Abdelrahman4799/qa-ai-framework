@@ -6,31 +6,33 @@ From zero to your first tested use case. ~10 minutes of one-time setup.
 
 ## 1. One-time setup
 
-### a. Fill in your config (two files)
+### a. Run the setup wizard (recommended — does it all)
 
-**Easiest:** when you open the folder in Claude Code, it detects the unfilled `TBD`s
-and offers the **setup wizard** — just say **"Run the setup wizard"** and it asks you
-for each value one at a time and updates the files for you (credentials go in a
-git-ignored `.env`).
+Open the folder in Claude Code; it detects the unfilled setup and offers the wizard.
+Say **"Run the setup wizard"** (or `/setup-wizard`). It asks you, one item at a time,
+and writes everything for you:
+- **config** → fills the `TBD`s in `context.md` and `devops-policy.md`
+- **credentials** → writes a git-ignored `.env`: `AZURE_DEVOPS_PAT` plus a
+  `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` pair per role
 
-Or edit by hand:
-- `docs/ai/context.md` → replace the `TBD`s: app **test/staging URLs**, environments,
-  test-account env-var names, and the **Review Gate** mode (`human` or `auto`).
-- `docs/ai/devops-policy.md` → Azure DevOps **org URL, project, area path, iteration path**.
+No restart needed (`.env` is loaded at runtime). Then skip to **c**.
 
-### b. Set up credentials in `.env`
-Create your `.env` from the template (or let the setup wizard write it for you):
+> Heads-up: values you type go through the chat, and `.env` is plaintext on disk
+> (syncs if the folder is in OneDrive) — use **test / non-production** accounts.
+
+### b. …or set it up by hand
+
+Config:
+- `docs/ai/context.md` → app **test/staging URLs**, environments, **Review Gate** (`human`/`auto`)
+- `docs/ai/devops-policy.md` → Azure DevOps **org URL, project, area path, iteration path**
+
+Credentials:
 ```powershell
 Copy-Item .env.example .env
 ```
-Then edit `.env` and fill in:
-- `AZURE_DEVOPS_PAT` — PAT scopes: **Work Items (Read & Write)**
-- one `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` pair **per role** (Admin, Manager,
-  Supervisor, Viewer, …) — these drive role-based testing
-
-`.env` is **git-ignored** and **loaded at runtime** (`scripts/load_env.ps1`), so
-there's **no restart needed**. It's plaintext on disk — use **test / non-production**
-accounts (and note: in a synced folder like OneDrive, `.env` syncs to the cloud).
+Edit `.env`: set `AZURE_DEVOPS_PAT` (scopes: **Work Items Read & Write**) and one
+`QA_<ROLE>_USER` / `QA_<ROLE>_PASS` pair **per role** (Admin, Manager, Supervisor,
+Viewer, …). Git-ignored, loaded at runtime — no restart.
 
 ### c. Open the folder in Claude Code and approve the hooks
 Open `qa-ai-framework/` as the project. When prompted to **trust the project hooks**,
