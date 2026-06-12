@@ -16,9 +16,10 @@ Keep this short. It is the only doc read on every task.
 - DO NOT test against production.
 
 ## Test Accounts & Data
-- One test account PER ROLE, read from environment variables
-  (e.g. `$env:QA_ADMIN_USER` / `$env:QA_ADMIN_PASS`, `$env:QA_VIEWER_USER` / `...`).
-  See the role matrix in `docs/ai/test-data-policy.md`. Never store credentials here.
+- One test account PER ROLE, stored in the git-ignored `.env` at the repo root and
+  loaded at runtime (`scripts/load_env.ps1`) as `QA_<ROLE>_USER` / `QA_<ROLE>_PASS`.
+  Copy `.env.example` to `.env` to start. See the role matrix in
+  `docs/ai/test-data-policy.md`. Never store credentials in tracked files.
 - Test data rules: no real PII. See `docs/ai/execution-policy.md`.
 
 ## Sources of Truth

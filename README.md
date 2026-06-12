@@ -13,7 +13,7 @@ Pipeline: **select a use case → generate test cases → execute via Playwright
 |---|---|---|
 | App test/staging URLs, environments, test-account env-var names | `docs/ai/context.md` | once |
 | Azure DevOps org / project / area / iteration | `docs/ai/devops-policy.md` | once |
-| Azure DevOps PAT | `$env:AZURE_DEVOPS_PAT` (env var, never a file) | once per machine |
+| Azure DevOps PAT + per-role accounts | git-ignored `.env` (copy from `.env.example`) | once |
 | Existing baseline SRS | `docs/ai/srs/` — or drop a Word `.docx` in `_inbox/` and run ingest-srs | as it changes |
 | New-feature SRS | `docs/ai/new-feature-srs/` | per feature |
 | Which use case to test | your chat prompt ("test UC-05") | every run |
@@ -55,10 +55,9 @@ then say **"Run doctor"** to see what setup remains.
 ## Setup (once)
 
 1. Fill in the `TBD` values in `docs/ai/context.md` and `docs/ai/devops-policy.md`.
-2. Set the token (PowerShell):
-   ```powershell
-   [Environment]::SetEnvironmentVariable("AZURE_DEVOPS_PAT", "<your-pat>", "User")
-   ```
+2. Set up credentials: `Copy-Item .env.example .env`, then fill in `AZURE_DEVOPS_PAT`
+   and the per-role `QA_*` accounts. `.env` is git-ignored and loaded at runtime
+   (`scripts/load_env.ps1`) — no restart needed. Use test/non-production accounts.
 3. Open this folder in Claude Code and **approve the project hooks** when prompted
    (they enforce the review gate and block PAT leaks).
 

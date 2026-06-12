@@ -4,7 +4,8 @@ How to execute test cases against the running app via the Playwright MCP.
 
 ## Before Execution
 - Confirm the target environment matches `docs/ai/context.md`. NEVER production.
-- Load the test case(s) and required test data / accounts (from env vars).
+- Load the test case(s) and required test data / accounts (from `.env` via
+  `scripts/load_env.ps1`).
 - Start from a known clean state (logged out / known landing page).
 - Create a run folder: `.qa-state/runs/<runid>/`.
 

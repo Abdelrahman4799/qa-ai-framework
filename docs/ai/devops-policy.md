@@ -8,10 +8,10 @@
 - API version: `7.1`
 
 ## Authentication
-- The PAT is read from the environment variable `AZURE_DEVOPS_PAT` at runtime.
+- The PAT is loaded from the git-ignored `.env` (`AZURE_DEVOPS_PAT`) at runtime via
+  `scripts/load_env.ps1` — or from the environment if already set.
 - NEVER hardcode, echo, log, or paste the PAT. (Enforced by the scan_secrets hook.)
-- Auth header is Basic with `":<PAT>"` base64-encoded, built at runtime from the
-  env var.
+- Auth header is Basic with `":<PAT>"` base64-encoded, built at runtime.
 - Required PAT scopes: Work Items (Read & Write); Test Management (Read & Write)
   if using Test Plans.
 

@@ -8,15 +8,19 @@ description: Upload reviewed test cases and defects to Azure DevOps via the REST
 ## Preconditions (enforced by hooks)
 - `.qa-state/review-passed.json` MUST exist (review gate). If missing, run
   review-results first.
-- `AZURE_DEVOPS_PAT` must be set in the environment. Never inline the token.
+- `AZURE_DEVOPS_PAT` must be available — set in `.env` (loaded via
+  `scripts/load_env.ps1`) or already in the environment. Never inline the token.
 
 ## Inputs
 - The reviewed test cases + defects.
 - `docs/ai/devops-policy.md` (org / project / area / iteration, fields, endpoints).
 
 ## Steps
-1. Load connection settings from devops-policy.md. Build the Basic auth header at
-   runtime from `$env:AZURE_DEVOPS_PAT` (base64 of ":$PAT"). Do not print it.
+1. Load credentials + settings. In the SAME PowerShell command, dot-source the
+   loader then build auth, e.g.:
+   `. scripts/load_env.ps1; $pat = $env:AZURE_DEVOPS_PAT; ...`
+   Build the Basic auth header (base64 of ":$pat") at runtime. Never print the PAT.
+   Read org/project/area/iteration from devops-policy.md.
 2. De-duplicate first
    - WIQL query for existing work items matching each TC ID / defect title.
    - Decide create vs update for each item.

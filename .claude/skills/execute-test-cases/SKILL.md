@@ -12,7 +12,9 @@ description: Execute a use case's test cases (plus its regression set) against t
 ## Steps
 1. Pre-flight
    - Confirm the target environment from `context.md` (NEVER production).
-   - Confirm test data / accounts (from env vars).
+   - Load credentials: dot-source `scripts/load_env.ps1` so each role's
+     `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` (from `.env`) is available; log in as the
+     role each test case specifies.
    - ORDER by dependency: from the `Depends on` column, run a use case's
      prerequisite cases BEFORE it (or establish the prerequisite end-state as the
      precondition). If a prerequisite FAILED or is BLOCKED, mark the dependent

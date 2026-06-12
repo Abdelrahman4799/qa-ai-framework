@@ -9,6 +9,13 @@ function Fail($m) { Write-Host "  [FAIL] $m";  $script:fail++ }
 Write-Host "AI QA Framework - setup doctor"
 Write-Host ""
 
+# Load credentials from .env so the checks below see them (no restart needed)
+if (Test-Path "$PSScriptRoot\load_env.ps1") { . "$PSScriptRoot\load_env.ps1" }
+
+# --- Credentials file ---
+if (Test-Path ".env") { Pass ".env present (credentials loaded from it)" }
+else { Warn "no .env file - copy .env.example to .env and fill it (or run setup-wizard)" }
+
 # --- Tooling ---
 if (Get-Command pandoc -ErrorAction SilentlyContinue) {
   Pass ("pandoc installed ({0})" -f (pandoc --version | Select-Object -First 1))

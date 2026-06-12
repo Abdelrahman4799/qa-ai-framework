@@ -10,38 +10,33 @@ From zero to your first tested use case. ~10 minutes of one-time setup.
 
 **Easiest:** when you open the folder in Claude Code, it detects the unfilled `TBD`s
 and offers the **setup wizard** — just say **"Run the setup wizard"** and it asks you
-for each value one at a time and updates the files for you (secrets stay in env vars,
-never in the repo).
+for each value one at a time and updates the files for you (credentials go in a
+git-ignored `.env`).
 
 Or edit by hand:
 - `docs/ai/context.md` → replace the `TBD`s: app **test/staging URLs**, environments,
   test-account env-var names, and the **Review Gate** mode (`human` or `auto`).
 - `docs/ai/devops-policy.md` → Azure DevOps **org URL, project, area path, iteration path**.
 
-### b. Set the Azure DevOps token (PowerShell)
+### b. Set up credentials in `.env`
+Create your `.env` from the template (or let the setup wizard write it for you):
 ```powershell
-[Environment]::SetEnvironmentVariable("AZURE_DEVOPS_PAT", "<your-pat>", "User")
+Copy-Item .env.example .env
 ```
-Required PAT scopes: **Work Items (Read & Write)**. Reopen your terminal afterward so
-the variable is picked up. The token is never stored in the repo.
+Then edit `.env` and fill in:
+- `AZURE_DEVOPS_PAT` — PAT scopes: **Work Items (Read & Write)**
+- one `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` pair **per role** (Admin, Manager,
+  Supervisor, Viewer, …) — these drive role-based testing
 
-### c. Set a test account PER ROLE (multi-role system)
-This system has roles (Admin, Manager, Supervisor, Viewer, …). Create one test
-account per role so permission tests can run as each:
-```powershell
-[Environment]::SetEnvironmentVariable("QA_ADMIN_USER", "<user>", "User")
-[Environment]::SetEnvironmentVariable("QA_ADMIN_PASS", "<pass>", "User")
-[Environment]::SetEnvironmentVariable("QA_VIEWER_USER", "<user>", "User")
-[Environment]::SetEnvironmentVariable("QA_VIEWER_PASS", "<pass>", "User")
-# ...repeat for Manager, Supervisor, and any other roles
-```
-The role → account mapping lives in `docs/ai/test-data-policy.md`.
+`.env` is **git-ignored** and **loaded at runtime** (`scripts/load_env.ps1`), so
+there's **no restart needed**. It's plaintext on disk — use **test / non-production**
+accounts (and note: in a synced folder like OneDrive, `.env` syncs to the cloud).
 
-### d. Open the folder in Claude Code and approve the hooks
+### c. Open the folder in Claude Code and approve the hooks
 Open `qa-ai-framework/` as the project. When prompted to **trust the project hooks**,
 approve — that activates the review gate, the secret scan, and the self-heal guard.
 
-### e. Install pandoc (only if your SRS is a Word .docx)
+### d. Install pandoc (only if your SRS is a Word .docx)
 The ingest-srs step uses pandoc to convert and split Word documents. Install it once:
 ```powershell
 winget install JohnMacFarlane.Pandoc
@@ -49,7 +44,7 @@ winget install JohnMacFarlane.Pandoc
 Or download from https://pandoc.org/installing.html. Reopen your terminal afterward,
 then verify with `pandoc --version`. Skip this if your SRS is already Markdown.
 
-### f. Confirm Playwright MCP is available
+### e. Confirm Playwright MCP is available
 This framework executes tests through the Playwright MCP. Make sure it is configured
 in your Claude Code (you confirmed it is).
 

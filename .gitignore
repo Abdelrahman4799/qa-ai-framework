@@ -11,3 +11,4 @@ docs/ai/new-feature-srs/_full.md
 *.pat
 *.token
 .env
+!.env.example

@@ -71,7 +71,7 @@ Use only the relevant skill:
 - A SessionStart check injects a note when setup is incomplete (config `TBD`s left
   or `AZURE_DEVOPS_PAT` unset). When you see it, OFFER to run the **setup-wizard**
   skill: ask the user for each `TBD` one at a time and update the config files.
-  Never write secrets into repo files — guide env-var setup separately.
+  Put credentials in the git-ignored `.env` (loaded at runtime), never in tracked files.
 
 ## Session History
 

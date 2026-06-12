@@ -7,13 +7,14 @@ This is a **multi-user, role-based** system. Each role needs its own test accoun
 
 The **role list (rows) is auto-populated by `index-srs`** from the actors named in
 the SRS, then you confirm it and add any role the SRS never mentions. `index-srs`
-merges — it will not overwrite the account env-var names or permission notes you
-fill in here. Credentials live in environment variables, never in this repo.
+merges — it will not overwrite the account key names or permission notes you fill
+in here. Credentials live in the git-ignored `.env` (keys `QA_<ROLE>_USER` /
+`QA_<ROLE>_PASS`, loaded at runtime), never in tracked files.
 Confirm exact permissions per role with the team (`TBD`); do not assume.
 
 The rows below are seed defaults — `index-srs` will reconcile them with the SRS.
 
-| Role | Account (env var) | Permissions / scope | Notes |
+| Role | Account (.env keys) | Permissions / scope | Notes |
 |------|-------------------|---------------------|-------|
 | Admin | `$env:QA_ADMIN_USER` / `$env:QA_ADMIN_PASS` | full access (`TBD - confirm`) | |
 | Manager | `$env:QA_MANAGER_USER` / `$env:QA_MANAGER_PASS` | `TBD - confirm` | |
