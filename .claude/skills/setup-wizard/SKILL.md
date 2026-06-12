@@ -32,21 +32,28 @@ setup is incomplete, or whenever the user asks to "set up" / "fill the TBDs".
    - Replace that specific `TBD` with the user's value in the correct file.
    - Confirm back what you wrote. If the user is unsure, LEAVE the `TBD` and note it.
 
-4. Secrets & credentials — NEVER write to the repo
-   - For the Azure DevOps PAT and per-role accounts, do NOT put values in any file.
-     Give the user the exact commands to set them as User env vars and ask them to
-     run those in their own terminal, e.g.:
-     ```powershell
-     [Environment]::SetEnvironmentVariable("AZURE_DEVOPS_PAT","<pat>","User")
-     [Environment]::SetEnvironmentVariable("QA_ADMIN_USER","<user>","User")
-     [Environment]::SetEnvironmentVariable("QA_ADMIN_PASS","<pass>","User")
-     ```
-   - Do not echo or run commands that contain the secret values yourself (the
-     `scan_secrets` hook blocks inlined PATs).
+4. Secrets & credentials — ASK the user and set the env vars (never write to repo files)
+   - ASK the user for each secret, one at a time, and SET it for them as a User
+     env var with `[Environment]::SetEnvironmentVariable(<name>, <value>, "User")`.
+   - One-time heads-up BEFORE asking: "Values you type here are visible in the session
+     transcript — use test (non-production) accounts. If you'd rather not share them
+     in chat, I can give you commands to run yourself instead." Honour their choice.
+   - Order, asking one value at a time:
+     a. Azure DevOps PAT → `AZURE_DEVOPS_PAT`
+     b. For each role in `docs/ai/test-data-policy.md`: ask the username then the
+        password → `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` (Admin, Manager, …)
+   - After setting each, confirm by NAME only — never echo the secret value back.
+   - Never write any secret into a repo file. (The `scan_secrets` hook still blocks a
+     command that inlines an already-set PAT, so don't echo it.)
+   - IMPORTANT: User-scope env vars are visible only to NEW processes. Tell the user to
+     RESTART Claude Code before `doctor`/execution can see them.
 
 5. Finish
-   - Re-run `doctor` and report what remains (e.g. SRS not added yet, env vars the
-     user still needs to set, leftover `TBD`s they were unsure about).
+   - Re-run `doctor` (note: env vars set this session aren't visible until restart).
+   - Give a clear ordered "what's left", e.g.:
+     1) RESTART Claude Code so the new env vars load
+     2) add the SRS (`.docx` → `_inbox/` then ingest-srs; or Markdown), then index-srs
+     3) confirm the Playwright MCP is connected
    - Summarize everything that was updated.
 
 ## Rules
