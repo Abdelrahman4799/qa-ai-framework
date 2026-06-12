@@ -64,6 +64,12 @@ in your Claude Code (you confirmed it is).
 **If you already have Markdown:** drop it into `docs/ai/srs/` (one feature per file)
 and `docs/ai/new-feature-srs/`, using `####` for use cases and `REQ-###` for requirements.
 
+**Verify your setup any time:**
+> "Run doctor."
+
+It checks pandoc, the PAT, per-role accounts, config TBDs, index freshness, and hooks,
+and tells you exactly what to fix.
+
 Then build the use-case catalog **once**:
 > "Run index-srs on the baseline SRS."
 

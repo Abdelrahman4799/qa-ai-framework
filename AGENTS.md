@@ -35,6 +35,7 @@ the use case in scope.
 
 Use only the relevant skill:
 
+- Health-check the framework setup → `.agents/skills/doctor/SKILL.md`
 - Ingest a Word (.docx) SRS → split into per-use-case files → `.agents/skills/ingest-srs/SKILL.md`
 - Build the use-case index (once per baseline) → `.agents/skills/index-srs/SKILL.md`
 - Generate test cases for a chosen use case → `.agents/skills/generate-test-cases/SKILL.md`
