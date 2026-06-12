@@ -72,11 +72,38 @@ then say **"Run doctor"** to see what setup remains.
 The framework reads only the chosen use case's section plus the related use cases
 it confirms with you — not the whole SRS.
 
+## Skills
+
+Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
+
+**Setup & health**
+- `setup-wizard` — guided onboarding; fills config `TBD`s one at a time and updates the files
+- `doctor` — setup health check (tooling, PAT, role accounts, config TBDs, index freshness, hooks)
+
+**Requirements intake**
+- `ingest-srs` — convert a Word `.docx` SRS with pandoc and split it into per-use-case files
+- `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + fingerprint
+
+**Test pipeline**
+- `generate-test-cases` — for one chosen use case: discover related/dependent UCs, role-based + dependency-aware cases, regression set
+- `execute-test-cases` — run via Playwright MCP, capture evidence + run report (PASS / FAIL / BLOCKED / FLAKY)
+- `triage-defect` — turn real failures (contradicting the SRS) into classified, reproducible bugs
+- `review-results` — the human review **gate**; on pass writes the upload marker
+- `upload-to-devops` — create Test Case + Bug work items via Azure DevOps REST + PAT
+- `coverage-report` — requirement / use-case coverage and gaps
+- `promote-to-srs` — fold an accepted new use case into the baseline SRS
+
+**Maintenance**
+- `self-heal` — propose rule/skill improvements (applied only after your approval)
+- `save-session` — append a full session record and refresh the handoff
+
 ## Enforcement
 
 - `CLAUDE.md` is auto-loaded every session (rules always in context).
 - Hooks in `.claude/settings.json`:
+  - `onboarding_check` (SessionStart) — offers the setup wizard while setup is incomplete.
   - `inject_reminder` — re-injects the core rules every prompt.
+  - `srs_fingerprint` — warns when the use-case index is stale vs the SRS.
   - `guard_upload` — blocks any Azure DevOps upload until the review gate writes
     `.qa-state/review-passed.json`.
   - `scan_secrets` — blocks any command that inlines the PAT.
@@ -100,9 +127,13 @@ docs/ai/         context + policies + SRS (baseline) + new-feature SRS
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
-.agents/skills/  the pipeline skills + self-heal + save-session
-.claude/         hooks + settings
+.agents/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
+                 review, upload, coverage, promote, self-heal, save-session (13)
+.claude/         hooks (6) + settings
+scripts/         ingest_srs.ps1, doctor.ps1
 ```
+
+> Docs: [OVERVIEW](OVERVIEW.md) · [QUICKSTART](QUICKSTART.md) · [ARCHITECTURE](ARCHITECTURE.md) · [EXTENDING](EXTENDING.md) · [framework-diagram.html](framework-diagram.html)
 
 ## Session history (hybrid)
 
