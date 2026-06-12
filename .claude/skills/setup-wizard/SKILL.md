@@ -36,17 +36,22 @@ setup is incomplete, or whenever the user asks to "set up" / "fill the TBDs".
    - The framework reads credentials from a `.env` file at the repo root, loaded at
      runtime by `scripts/load_env.ps1`. This avoids Windows env-var restart issues —
      values are usable immediately, no restart.
-   - If `.env` does not exist, create it from the template: `Copy-Item .env.example .env`.
    - One-time heads-up: `.env` stores plaintext secrets on disk (git-ignored). Use
      TEST / non-production accounts. If the repo is in a synced folder (e.g. OneDrive),
      `.env` syncs to the cloud — keep that in mind.
-   - ASK the user for each value, one at a time, and WRITE it into `.env`:
+   - ASK the user for each value, one at a time, and store it by running the helper
+     (it creates `.env` from `.env.example` if missing and upserts the key):
+     ```
+     powershell -NoProfile -ExecutionPolicy Bypass -File scripts/set_env.ps1 -Key <KEY> -Value "<value>"
+     ```
+     Keys to collect:
      a. Azure DevOps PAT → `AZURE_DEVOPS_PAT`
      b. For each role in `docs/ai/test-data-policy.md`: ask username then password →
         `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` (Admin, Manager, Supervisor, Viewer, …)
    - Confirm each by NAME only — never echo the secret value back. Never put secrets in
-     a tracked file. (The `scan_secrets` hook still blocks a command that inlines the PAT.)
-   - No restart needed.
+     a tracked file. (`scan_secrets` allows `set_env.ps1` but blocks the PAT inlined
+     anywhere else.)
+   - No restart needed — `.env` is read at runtime.
 
 5. Finish
    - Run `doctor` — it loads `.env`, so values show immediately (no restart).

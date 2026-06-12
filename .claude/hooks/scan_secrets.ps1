@@ -15,7 +15,9 @@ if (-not $pat) {
         if ($m) { $pat = ($m.Matches[0].Groups[1].Value.Trim() -replace '^[''"]', '' -replace '[''"]$', '') }
     }
 }
-if ($pat -and $cmd.Contains($pat)) {
+# Allow the sanctioned credential helper (the wizard storing a value into .env).
+$isCredHelper = $cmd -match 'set_env\.ps1'
+if ($pat -and -not $isCredHelper -and $cmd.Contains($pat)) {
     [Console]::Error.WriteLine('BLOCKED: the PAT value appears inline in this command. Reference $env:AZURE_DEVOPS_PAT instead, never the token text.')
     exit 2
 }
