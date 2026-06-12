@@ -25,6 +25,23 @@ documents in. Nothing here invents requirements.
 > New here? Start with **[QUICKSTART.md](QUICKSTART.md)** — zero to first tested use case.
 > Plugging in your own agents/tools? See **[EXTENDING.md](EXTENDING.md)** — stage contracts and integration patterns.
 
+## Get the framework
+
+Clone it (public repo — no auth needed to clone):
+
+```bash
+git clone https://github.com/Abdelrahman4799/qa-ai-framework.git
+cd qa-ai-framework
+```
+
+Alternatives: `gh repo clone Abdelrahman4799/qa-ai-framework` (GitHub CLI), or SSH
+`git clone git@github.com:Abdelrahman4799/qa-ai-framework.git`.
+
+The clone is a fresh template — `docs/ai/srs/`, `.qa-state/`, and credentials are
+empty or git-ignored, so each user supplies their own SRS, PAT, and per-role
+accounts. Open the folder in Claude Code, approve the project hooks when prompted,
+then say **"Run doctor"** to see what setup remains.
+
 ## Prerequisites
 
 - **Playwright MCP** configured in Claude Code (the framework executes tests through it).
