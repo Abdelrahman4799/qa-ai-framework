@@ -23,6 +23,7 @@ documents in. Nothing here invents requirements.
 
 > **Why this framework?** See **[OVERVIEW.md](OVERVIEW.md)** — the problems it solves and who it's for.
 > New here? Start with **[QUICKSTART.md](QUICKSTART.md)** — zero to first tested use case.
+> Plugging in your own agents/tools? See **[EXTENDING.md](EXTENDING.md)** — stage contracts and integration patterns.
 
 ## Prerequisites
 
