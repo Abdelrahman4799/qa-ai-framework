@@ -16,6 +16,9 @@ through the Playwright MCP, and the SRS documents are the source of truth.
 - Never inline the DevOps PAT; reference `$env:AZURE_DEVOPS_PAT` only.
 - You may **propose** improvements to the framework's rules/skills (self-heal),
   but only **apply** them after explicit user approval — never weaken a guardrail.
+- On a fresh/incomplete setup (SessionStart says so), offer the **setup-wizard**
+  skill: collect each config `TBD` one at a time and update the files; keep secrets
+  in env vars, never in the repo.
 
 See **AGENTS.md** for reading routing, the skill pipeline, and the required
 final-response format.

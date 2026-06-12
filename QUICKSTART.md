@@ -7,6 +7,13 @@ From zero to your first tested use case. ~10 minutes of one-time setup.
 ## 1. One-time setup
 
 ### a. Fill in your config (two files)
+
+**Easiest:** when you open the folder in Claude Code, it detects the unfilled `TBD`s
+and offers the **setup wizard** — just say **"Run the setup wizard"** and it asks you
+for each value one at a time and updates the files for you (secrets stay in env vars,
+never in the repo).
+
+Or edit by hand:
 - `docs/ai/context.md` → replace the `TBD`s: app **test/staging URLs**, environments,
   test-account env-var names, and the **Review Gate** mode (`human` or `auto`).
 - `docs/ai/devops-policy.md` → Azure DevOps **org URL, project, area path, iteration path**.

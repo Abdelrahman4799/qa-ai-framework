@@ -35,6 +35,7 @@ the use case in scope.
 
 Use only the relevant skill:
 
+- Guided onboarding (fill the config TBDs one by one) → `.agents/skills/setup-wizard/SKILL.md`
 - Health-check the framework setup → `.agents/skills/doctor/SKILL.md`
 - Ingest a Word (.docx) SRS → split into per-use-case files → `.agents/skills/ingest-srs/SKILL.md`
 - Build the use-case index (once per baseline) → `.agents/skills/index-srs/SKILL.md`
@@ -64,6 +65,13 @@ Use only the relevant skill:
   behavior.
 - Do not upload anything to DevOps until results pass the review gate.
 - Never expose the DevOps PAT, secrets, or credentials in output, logs, or work items.
+
+## First Run / Onboarding
+
+- A SessionStart check injects a note when setup is incomplete (config `TBD`s left
+  or `AZURE_DEVOPS_PAT` unset). When you see it, OFFER to run the **setup-wizard**
+  skill: ask the user for each `TBD` one at a time and update the config files.
+  Never write secrets into repo files — guide env-var setup separately.
 
 ## Session History
 
