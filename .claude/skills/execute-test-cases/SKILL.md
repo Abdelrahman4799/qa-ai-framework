@@ -39,10 +39,19 @@ description: Execute a use case's test cases (plus its regression set) against t
      Passed on retry → FLAKY (record both attempts); failed again → FAIL.
      (See Flaky Handling in execution-policy.md.)
    - On FAIL: capture URL + visible error + observed-vs-expected.
-3. Record results
+3. GOAL LOOP (/goal) — iterate to definitive results
+   - GOAL: every in-scope case reaches a definitive PASS or FAIL with evidence;
+     BLOCKED is minimised; prerequisites are provisioned; FLAKY is resolved or flagged.
+   - ITERATE (max 3 rounds, or stop early when a round resolves nothing new) over every
+     case NOT yet at a definitive PASS/FAIL:
+     · BLOCKED → provision the missing prerequisite (step 2) and re-run;
+     · evidence missing → recapture; transient/timing → apply the one controlled retry;
+     · cases that became runnable after provisioning → run them now.
+   - Stop when all are definitive or no further progress; report what remains and why.
+4. Record results
    - Write a result record per case into the run folder
      (TC ID, status, evidence paths, notes).
-4. Summarize + write the run report
+5. Summarize + write the run report
    - Totals (pass / fail / blocked / flaky), the list of FAILs (→ triage-defect),
      FLAKY cases (human attention), and BLOCKED reasons.
    - Write `.qa-state/runs/<runid>/RUN-REPORT.md` per execution-policy.md.

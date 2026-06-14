@@ -68,9 +68,17 @@ Never generate for the whole SRS.
    - Save cases under `test-cases/<UC-ID>/`.
    - Update `test-cases/traceability.md` (UC/REQ → TC).
 
-10. SELF-CHECK
-    - Chosen UC fully covered; regression set identified; expected results cited
-      (not assumed); no real PII; TBDs listed.
+10. GOAL LOOP (/goal) — iterate to the best coverage
+    - GOAL: for the chosen UC, EVERY acceptance criterion and scenario type is covered —
+      happy, negative, boundary, permission (each actor positive + each non-actor denied),
+      and dependency preconditions; every case meets test-case-standards.md; traceability
+      is complete; expected results are cited from the SRS (not assumed); no real PII.
+    - ITERATE (max 3 rounds, or stop early when a round adds nothing new):
+      1. Self-critique the current cases against the GOAL — list missing ACs / scenarios /
+         roles / edge cases / weak assertions.
+      2. Add or strengthen cases to close each gap; re-save and update traceability.
+      3. Re-check. Stop when no new gap is found or after 3 rounds.
+    - Report final coverage vs the GOAL and any residual gaps (as `TBD` / known limits).
 
 ## Output
 - New test cases + the regression set (TC IDs).
