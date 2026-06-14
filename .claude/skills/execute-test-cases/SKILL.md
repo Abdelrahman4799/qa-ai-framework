@@ -17,12 +17,21 @@ description: Execute a use case's test cases (plus its regression set) against t
      role each test case specifies.
    - ORDER by dependency: from the `Depends on` column, run a use case's
      prerequisite cases BEFORE it (or establish the prerequisite end-state as the
-     precondition). If a prerequisite FAILED or is BLOCKED, mark the dependent
-     case BLOCKED (don't test on a broken precondition). Stop following a chain at
-     a `TBD`/circular edge and report it.
+     precondition). Stop following a chain at a `TBD`/circular edge and report it.
    - Create a run folder: `.qa-state/runs/<runid>/`.
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
+   - PROVISION missing prerequisites/data (don't just block): if a precondition is
+     not met or required data is missing, CREATE it before testing —
+       · preferred: run the prerequisite use case's create flow (from `Depends on`)
+         using the role that is allowed to create it;
+       · otherwise create the minimal data directly through the app UI (or a
+         documented API), using SYNTHETIC, clearly tagged values
+         (e.g. prefix `QA-<runid>-`). No real PII.
+     Record what you created, then proceed with the test case.
+     Only mark BLOCKED if provisioning is genuinely impossible (no create path, needs
+     a privilege no available role has, or the requirement is ambiguous → `TBD`).
+     See "Test Data Provisioning" in execution-policy.md for limits.
    - Execute steps exactly as written, one action per step.
    - For each asserting step: capture a screenshot + observed result;
      mark PASS / FAIL / BLOCKED.
@@ -40,7 +49,12 @@ description: Execute a use case's test cases (plus its regression set) against t
 
 ## Rules
 - Do not modify the app or skip steps to force a pass.
-- Use only test data/accounts; no real PII; reversible actions on shared envs.
+- Provisioning setup data is allowed; faking the result under test is NOT — the
+  assertion's expected result still comes from the SRS.
+- Use only test data/accounts; no real PII; tag created data and clean it up when
+  feasible (note anything left behind in the run report).
+- Provision only on the environment named in `context.md` (never production); do not
+  run destructive setup on shared envs unless `context.md` authorizes it.
 
 ## Output
 - Run summary + per-case results + evidence references.

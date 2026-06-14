@@ -21,7 +21,8 @@ How to execute test cases against the running app via the Playwright MCP.
 ## Result States
 - PASS — observed == expected
 - FAIL — observed != expected (candidate defect → triage-defect skill)
-- BLOCKED — could not execute (precondition / environment / data issue)
+- BLOCKED — could not execute even after attempting to provision the prerequisite
+  (no create path, needs an unavailable privilege, or the requirement is ambiguous)
 - FLAKY — failed then passed on a single controlled retry (see Flaky Handling)
 
 ## Flaky Handling
@@ -35,11 +36,28 @@ How to execute test cases against the running app via the Playwright MCP.
 - Report FLAKY cases separately — they need human attention, not a bug report by
   default.
 
+## Test Data Provisioning (self-setup)
+When a test case's precondition isn't met or required data is missing, CREATE it
+rather than blocking:
+- Preferred: run the prerequisite use case's create flow (from `Depends on`), using
+  a role allowed to create it.
+- Otherwise: create the minimal data through the app UI (or a documented API).
+- Use SYNTHETIC, clearly tagged values (e.g. prefix `QA-<runid>-`) so created data is
+  identifiable. No real PII.
+- Record every item provisioned (what, where, which role) in the run report.
+- Re-attempt the test case once the prerequisite exists.
+- Mark BLOCKED only if provisioning is genuinely impossible (no create path, needs a
+  privilege no available role has, or an ambiguous requirement → `TBD`).
+- Boundaries: provision only on the environment in `context.md` (never production);
+  no destructive setup on shared environments unless `context.md` authorizes it.
+- Provisioning sets up state; it must NOT fabricate the result under test — the
+  expected result still comes from the SRS.
+
 ## Data & Safety
 - Use only designated test accounts / data. No real PII.
-- Prefer read-only / reversible actions. No destructive actions on shared
-  environments unless `context.md` authorizes it.
-- Clean up created test data when feasible; note anything left behind.
+- Prefer reversible actions. No destructive actions on shared environments unless
+  `context.md` authorizes it.
+- Clean up created/provisioned test data when feasible; note anything left behind.
 
 ## Evidence Storage
 - All run artifacts under `.qa-state/runs/<runid>/` (screenshots + result log).
@@ -52,7 +70,8 @@ How to execute test cases against the running app via the Playwright MCP.
   - Totals: PASS / FAIL / BLOCKED / FLAKY
   - Failures: TC — observed vs expected — evidence path
   - Flaky: TC — both attempts
-  - Blocked: TC — reason
+  - Blocked: TC — reason (and what provisioning was attempted)
+  - Provisioned data: what was created (tag), where, by which role, cleaned up? (y/n)
   - Evidence folder path
 
 ## Output

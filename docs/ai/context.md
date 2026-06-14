@@ -32,6 +32,9 @@ Keep this short. It is the only doc read on every task.
 - In scope: functional black-box testing of the chosen use case.
 - Out of scope (unless explicitly authorized): destructive tests on shared
   environments, performance/load, security penetration.
+- Test data: the AI MAY auto-provision missing prerequisites/data (synthetic,
+  tagged `QA-<runid>-`, cleaned up when feasible) on test/staging only — never
+  production. Set to `no` here to forbid provisioning: `provisioning = yes`
 
 ## Review Gate
 - Default: HUMAN approval required before any DevOps upload.
