@@ -121,12 +121,6 @@
     <text class="staget" x="470" y="720" text-anchor="middle">upload-to-devops</text>
     <text class="lbl small" x="470" y="740" text-anchor="middle">REST + PAT · Test Case + Bug</text>
 
-    <!-- 7 promote -->
-    <rect class="stage" x="320" y="806" width="300" height="62" rx="10"/>
-    <text class="num" x="338" y="832">7</text>
-    <text class="staget" x="470" y="832" text-anchor="middle">promote-to-srs</text>
-    <text class="lbl small" x="470" y="852" text-anchor="middle">accepted new UC → baseline SRS</text>
-
     <!-- STORES (right column x=720..1140) -->
     <rect class="store" x="720" y="142" width="420" height="58" rx="10"/>
     <text class="storet" x="930" y="166" text-anchor="middle">srs/_index.md</text>
@@ -163,8 +157,6 @@
     <path class="edgeD" d="M320,620 L250,620 L250,515 L318,515" marker-end="url(#arrow)"/>
     <text class="lbl" x="196" y="566">fail:</text>
     <text class="lbl" x="186" y="582">re-review</text>
-    <!-- upload -> promote -->
-    <path class="edge" d="M470,756 L470,804" marker-end="url(#arrow)"/>
 
     <!-- stage -> store edges -->
     <path class="edge" d="M620,171 L718,171" marker-end="url(#arrow)"/>
@@ -173,9 +165,6 @@
     <path class="edgeA" d="M620,620 L718,620" marker-end="url(#arrowA)"/>
     <path class="edge" d="M620,725 L718,729" marker-end="url(#arrow)"/>
 
-    <!-- promote feedback to baseline SRS (far left dashed) -->
-    <path class="edgeD" d="M320,837 L40,837 L40,88 L120,88" marker-end="url(#arrow)"/>
-    <text class="lbl" x="50" y="470" transform="rotate(-90 50,470)">promote: accepted feature becomes living baseline</text>
 
     <!-- token note -->
     <text class="lbl" x="930" y="470" text-anchor="middle" font-style="italic">Full SRS is read only here (stage 1, once).</text>
@@ -256,7 +245,7 @@
 
   <h2>How to read it</h2>
   <ul>
-    <li><b>Top diagram = the pipeline.</b> A single chosen use case flows top-to-bottom: index once → generate → execute in a real browser → triage failures → <b>review gate</b> → upload to Azure DevOps → promote back into the baseline SRS (left dashed feedback line).</li>
+    <li><b>Top diagram = the pipeline.</b> A single chosen use case flows top-to-bottom: index once → generate → execute in a real browser → triage failures → <b>review gate</b> → upload to Azure DevOps.</li>
     <li><b>Right column = what persists</b> between sessions. Downstream stages read these, not the SRS.</li>
     <li><b>Violet self-loops = the <code>/goal</code> loop.</b> Generate iterates (≤3 rounds) to maximise coverage; execute iterates (≤3 rounds) to drive every case to a definitive PASS/FAIL. Each stops early when a round makes no progress.</li>
     <li><b>Auto-provisioning:</b> if a use case is blocked by missing data/prerequisites, execute <i>creates</i> it (synthetic, tagged, test-env only) and retries — BLOCKED is a last resort.</li>

@@ -32,7 +32,7 @@ Run this at the end of a working session, or when the user says "save the sessio
    - Use case(s): <UC-IDs>   Related/regression: <UC-IDs>
 
    ## What ran (by stage)
-   - index-srs / generate / execute / triage / review / upload / promote: <notes>
+   - index-srs / generate / execute / triage / review / upload: <notes>
 
    ## Decisions
    - <choices the user made, scope confirmations, approvals>

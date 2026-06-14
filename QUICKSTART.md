@@ -116,7 +116,6 @@ session resumes where you left off.
 | Just generate cases (no run) | "Generate test cases for UC-05, don't execute yet." |
 | See coverage / gaps | "Run the coverage report." |
 | Propose a framework improvement | "Self-heal: propose better rules from what you just saw." |
-| Promote an accepted feature | "Promote UC-N01 into the baseline SRS." |
 | Save progress | "Save the session." |
 
 ---

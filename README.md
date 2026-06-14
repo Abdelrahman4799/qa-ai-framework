@@ -90,7 +90,6 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 - `review-results` — the human review **gate**; on pass writes the upload marker
 - `upload-to-devops` — create Test Case + Bug work items via Azure DevOps REST + PAT
 - `coverage-report` — requirement / use-case coverage and gaps
-- `promote-to-srs` — fold an accepted new use case into the baseline SRS
 
 **Maintenance**
 - `self-heal` — propose rule/skill improvements (applied only after your approval)
@@ -127,7 +126,7 @@ test-cases/      generated cases (persist, per use case) + traceability + covera
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
 .claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
-                 review, upload, coverage, promote, self-heal, save-session (13)
+                 review, upload, coverage, self-heal, save-session (12)
 .claude/         hooks (6) + settings
 scripts/         ingest_srs.ps1, doctor.ps1
 ```

@@ -14,9 +14,8 @@ after the user approves.
   methodology policies in `docs/ai/` (`test-case-standards.md`,
   `execution-policy.md`, `defect-policy.md`, `glossary.md`), and the skills in
   `.claude/skills/`.
-- MUST NOT self-edit: SRS content / requirements (that goes through
-  `promote-to-srs`) or the user's project config (`context.md`,
-  `devops-policy.md` — the user owns those).
+- MUST NOT self-edit: SRS content / requirements (owned by the team) or the
+  user's project config (`context.md`, `devops-policy.md` — the user owns those).
 - MUST NEVER weaken a safety rule (review gate, no real PII, no PAT exposure, no
   production testing). Self-heal may only TIGHTEN guardrails, never loosen them,
   and only with explicit written approval.

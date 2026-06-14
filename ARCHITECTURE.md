@@ -43,8 +43,6 @@ flowchart TD
     S5 -->|pass| MARK[(".qa-state/<br/>review-passed.json")]
     MARK --> S6["6 · upload-to-devops<br/>REST + PAT<br/>Test Case + Bug"]
     S6 --> ADO[["Azure DevOps"]]
-    S6 --> S7["7 · promote-to-srs<br/>accepted new UC<br/>folds into baseline"]
-    S7 -.-> SRS
 ```
 
 **Reading it:** `index-srs` is the only full-SRS read and runs once. Everything
@@ -53,8 +51,7 @@ after is scoped to one use case. Stages 2 and 3 each run a bounded **`/goal` loo
 execute iterates to drive every case to a definitive PASS/FAIL, **auto-provisioning**
 missing prerequisite data (synthetic, test-env only) instead of blocking. The gate
 (stage 5) is the single point that can authorize an upload — it writes a marker file
-that stage 6's hook checks. `promote-to-srs` feeds an accepted feature back into the
-baseline (dashed line), keeping the SRS a living source of truth.
+that stage 6's hook checks, after which results land in Azure DevOps.
 
 ---
 
@@ -86,7 +83,6 @@ flowchart TB
         K4["triage-defect"]
         K5["review-results"]
         K6["upload-to-devops"]
-        K7["promote-to-srs"]
         K8["coverage-report"]
         K9["self-heal"]
         K10["save-session"]

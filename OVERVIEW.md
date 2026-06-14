@@ -52,7 +52,6 @@ Word/Markdown SRS  →  index use cases  →  pick ONE use case
                    →  generate test cases (role- & dependency-aware)
                    →  execute in a real browser (Playwright MCP)
                    →  triage defects  →  review GATE  →  upload to Azure DevOps
-                   →  promote accepted features back into the baseline SRS
 ```
 
 It is **requirements-driven** (the SRS is the only source of truth), **black-box**

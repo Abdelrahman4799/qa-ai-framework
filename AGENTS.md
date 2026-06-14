@@ -47,7 +47,6 @@ Use only the relevant skill:
 - Triage / log a defect → `.claude/skills/triage-defect/SKILL.md`
 - Review results before upload → `.claude/skills/review-results/SKILL.md`
 - Upload to Azure DevOps → `.claude/skills/upload-to-devops/SKILL.md`
-- Promote an accepted new use case into the baseline SRS → `.claude/skills/promote-to-srs/SKILL.md`
 - Propose & apply an approved improvement to the framework → `.claude/skills/self-heal/SKILL.md`
 - Save session history at the end of a session → `.claude/skills/save-session/SKILL.md`
 
@@ -97,7 +96,7 @@ Use only the relevant skill:
 - You MAY improve: this file, `CLAUDE.md`, the methodology policies
   (`test-case-standards.md`, `execution-policy.md`, `defect-policy.md`,
   `glossary.md`), and the skills in `.claude/skills/`.
-- You MUST NOT self-edit: SRS content / requirements (use promote-to-srs) or the
+- You MUST NOT self-edit: SRS content / requirements (owned by the team) or the
   user's project config (`context.md`, `devops-policy.md`).
 - You MUST NEVER weaken a safety rule (review gate, no real PII, no PAT exposure,
   no production testing) via self-heal. Those may only be tightened.
