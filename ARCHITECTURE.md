@@ -28,7 +28,8 @@ flowchart TD
     S1 --> IDX[("srs/_index.md<br/>+ _fingerprint.json")]
 
     NFS --> S2
-    IDX --> S2["2 · generate-test-cases<br/>SELECT one UC · discover + CONFIRM<br/>cases + regression set"]
+    IDX --> S2["2 · generate-test-cases<br/>SELECT UC · discover + CONFIRM<br/>walk coverage dimensions · cases + regression"]
+    DEC[("decisions.md DEC-###<br/>coverage-dimensions · fixtures · app-map")] -.-> S2
     S2 -.->|"/goal loop ≤3<br/>maximise coverage"| S2
     S2 --> TC[("test-cases/UC-xx/<br/>traceability.md<br/>coverage.md")]
 
@@ -73,8 +74,11 @@ flowchart TB
         P2["execution-policy"]
         P3["defect-policy"]
         P4["devops-policy"]
-        P5["test-data-policy"]
-        P6["glossary"]
+        P5["test-data-policy + permission-matrix"]
+        P6["coverage-dimensions"]
+        P7["decisions (DEC-###)"]
+        P8["test-fixtures · app-map"]
+        P9["glossary"]
     end
     subgraph L3["Skills · the pipeline"]
         K1["index-srs"]
