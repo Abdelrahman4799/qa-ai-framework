@@ -53,7 +53,18 @@ setup is incomplete, or whenever the user asks to "set up" / "fill the TBDs".
      anywhere else.)
    - No restart needed — `.env` is read at runtime.
 
-5. Finish
+5. (Optional) Capture known app knowledge
+   - Offer — don't force: "Do you already know any of the app's navigation routes,
+     per-role landing pages, known UI quirks, or pre-seeded fixtures? I can record them
+     now so runs don't re-derive them."
+   - If yes, write what they give into:
+     · `docs/ai/app-map.md` — login/landing per role, feature → route → roles, gotchas
+     · `docs/ai/test-fixtures.md` — any already-seeded named states (with identifying data)
+   - If no / unsure, leave the templates as-is — they fill in naturally as runs surface
+     the need (execution updates app-map gotchas; fixtures are added when first required).
+   - These are not blockers for a first run.
+
+6. Finish
    - Run `doctor` — it loads `.env`, so values show immediately (no restart).
    - Give a clear ordered "what's left", e.g.:
      1) add the SRS (`.docx` → `_inbox/` then ingest-srs; or Markdown), then index-srs
