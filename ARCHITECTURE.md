@@ -28,10 +28,12 @@ flowchart TD
     S1 --> IDX[("srs/_index.md<br/>+ _fingerprint.json")]
 
     NFS --> S2
-    IDX --> S2["2 · generate-test-cases<br/>SELECT one UC<br/>discover related + CONFIRM<br/>generate cases + regression set"]
+    IDX --> S2["2 · generate-test-cases<br/>SELECT one UC · discover + CONFIRM<br/>cases + regression set"]
+    S2 -.->|"/goal loop ≤3<br/>maximise coverage"| S2
     S2 --> TC[("test-cases/UC-xx/<br/>traceability.md<br/>coverage.md")]
 
-    TC --> S3["3 · execute-test-cases<br/>Playwright MCP<br/>PASS / FAIL / BLOCKED / FLAKY"]
+    TC --> S3["3 · execute-test-cases<br/>Playwright MCP · auto-provision data<br/>PASS / FAIL / BLOCKED / FLAKY"]
+    S3 -.->|"/goal loop ≤3<br/>definitive results"| S3
     S3 --> RUN[(".qa-state/runs/id/<br/>screenshots + RUN-REPORT.md")]
 
     RUN --> S4["4 · triage-defect<br/>FAIL that contradicts SRS<br/>= classified bug"]
@@ -46,10 +48,13 @@ flowchart TD
 ```
 
 **Reading it:** `index-srs` is the only full-SRS read and runs once. Everything
-after is scoped to one use case. The gate (stage 5) is the single point that can
-authorize an upload — and it does so by writing a marker file that stage 6's hook
-checks. `promote-to-srs` feeds an accepted feature back into the baseline (dashed
-line), keeping the SRS a living source of truth.
+after is scoped to one use case. Stages 2 and 3 each run a bounded **`/goal` loop**
+(≤3 rounds, early-stop on no progress) — generate iterates to maximise coverage,
+execute iterates to drive every case to a definitive PASS/FAIL, **auto-provisioning**
+missing prerequisite data (synthetic, test-env only) instead of blocking. The gate
+(stage 5) is the single point that can authorize an upload — it writes a marker file
+that stage 6's hook checks. `promote-to-srs` feeds an accepted feature back into the
+baseline (dashed line), keeping the SRS a living source of truth.
 
 ---
 

@@ -39,7 +39,12 @@
       <marker id="arrowA" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
         <path d="M0,0 L9,3 L0,6 Z" fill="#fbbf24"/>
       </marker>
+      <marker id="arrowL" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L9,3 L0,6 Z" fill="#a78bfa"/>
+      </marker>
       <style>
+        .loop{stroke:#a78bfa;stroke-width:2.5;fill:none;}
+        .loopt{fill:#c4b5fd;font-size:11px;font-weight:700;}
         .stage{fill:#0d9488;stroke:#5eead4;stroke-width:1.5;}
         .staget{fill:#ecfeff;font-weight:600;}
         .num{fill:#99f6e4;font-weight:700;}
@@ -88,8 +93,16 @@
     <rect class="stage" x="320" y="368" width="300" height="74" rx="10"/>
     <text class="num" x="338" y="394">3</text>
     <text class="staget" x="470" y="394" text-anchor="middle">execute-test-cases</text>
-    <text class="lbl small" x="470" y="412" text-anchor="middle">Playwright MCP · real browser</text>
+    <text class="lbl small" x="470" y="412" text-anchor="middle">Playwright MCP · auto-provision data</text>
     <text class="lbl small" x="470" y="428" text-anchor="middle">PASS / FAIL / BLOCKED / FLAKY</text>
+
+    <!-- /goal self-loops on generate (2) and execute (3) -->
+    <path class="loop" d="M320,272 C258,264 258,308 320,308" marker-end="url(#arrowL)"/>
+    <text class="loopt" x="250" y="284" text-anchor="end">/goal</text>
+    <text class="loopt" x="250" y="298" text-anchor="end">≤3×</text>
+    <path class="loop" d="M320,388 C258,380 258,424 320,424" marker-end="url(#arrowL)"/>
+    <text class="loopt" x="250" y="400" text-anchor="end">/goal</text>
+    <text class="loopt" x="250" y="414" text-anchor="end">≤3×</text>
 
     <!-- 4 triage -->
     <rect class="stage" x="320" y="484" width="300" height="62" rx="10"/>
@@ -176,6 +189,7 @@
     <span><i class="sw" style="background:#1f2937;border:1px solid #6b7280"></i>Persisted artifact</span>
     <span><i class="sw" style="background:#6d28d9"></i>External system</span>
     <span><i class="sw" style="background:#fbbf24"></i>Gated-by-approval path</span>
+    <span><i class="sw" style="background:#a78bfa"></i>/goal iteration loop (≤3 rounds)</span>
   </div>
   </div>
 
@@ -244,6 +258,8 @@
   <ul>
     <li><b>Top diagram = the pipeline.</b> A single chosen use case flows top-to-bottom: index once → generate → execute in a real browser → triage failures → <b>review gate</b> → upload to Azure DevOps → promote back into the baseline SRS (left dashed feedback line).</li>
     <li><b>Right column = what persists</b> between sessions. Downstream stages read these, not the SRS.</li>
+    <li><b>Violet self-loops = the <code>/goal</code> loop.</b> Generate iterates (≤3 rounds) to maximise coverage; execute iterates (≤3 rounds) to drive every case to a definitive PASS/FAIL. Each stops early when a round makes no progress.</li>
+    <li><b>Auto-provisioning:</b> if a use case is blocked by missing data/prerequisites, execute <i>creates</i> it (synthetic, tagged, test-env only) and retries — BLOCKED is a last resort.</li>
     <li><b>Amber path</b> is gated: nothing reaches Azure DevOps until the review gate writes <code>review-passed.json</code>.</li>
     <li><b>Bottom diagram = enforcement.</b> Five hooks run outside the model and can DENY an action — they turn "please follow the rules" into rules that hold.</li>
     <li><b>Token efficiency:</b> the full SRS is read only at stage 1 (once). Every test run reads tiny index files plus one use-case section and its confirmed related sections.</li>
