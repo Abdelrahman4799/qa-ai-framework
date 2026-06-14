@@ -12,6 +12,8 @@ Never generate for the whole SRS.
 - The chosen use case (by ID, or picked from a catalog).
 - `docs/ai/new-feature-srs/_index.md`, `docs/ai/srs/_index.md` (tiny).
 - `docs/ai/test-case-standards.md`.
+- `docs/ai/test-fixtures.md` (named prerequisite states to reference instead of
+  building deep/irreversible state live).
 
 ## Steps
 
@@ -50,6 +52,18 @@ Never generate for the whole SRS.
      prerequisite UC(s) and the state they leave behind (e.g. "an order exists —
      UC-01"). The setup either runs the prerequisite first or asserts its end-state.
      Follow chains only as far as needed; stop at a `TBD`/circular edge and flag it.
+   - PRECONDITION-FEASIBILITY TAG: tag every case so execution knows how its setup is
+     obtained —
+       · `self-serviceable` — the case can build its own data with the available
+         accounts (create your own, prefix `QA_<runid>_`).
+       · `needs-fixture: <name>` — depends on a deep/irreversible/compound state;
+         reference a named fixture from `docs/ai/test-fixtures.md` (e.g. a parent record
+         WITH a dependent) instead of inlining the build steps.
+       · `needs-config` — requires an app configuration that must pre-exist; name what
+         must be configured.
+       · `needs-live-action` — needs an outward-facing/irreversible action; flag for
+         explicit authorization.
+     Surfacing these upfront makes "blocked-by-design" cases visible before a run.
    - ROLE-BASED coverage (multi-role system). The allowed roles come from the
      `Actors` column of the use case in `_index.md` (and `permission-matrix.md`):
        · allowed = the UC's Actors  → POSITIVE cases (each actor can do it)

@@ -21,8 +21,11 @@ How to execute test cases against the running app via the Playwright MCP.
 ## Result States
 - PASS — observed == expected
 - FAIL — observed != expected (candidate defect → triage-defect skill)
-- BLOCKED — could not execute even after attempting to provision the prerequisite
-  (no create path, needs an unavailable privilege, or the requirement is ambiguous)
+- BLOCKED — could not execute (missing prerequisite/fixture, environment, data, or
+  capability). Name the missing fixture/capability — see `docs/ai/test-fixtures.md`.
+- INCONCLUSIVE — executed, but the UI could not confirm the expected state (e.g. a
+  lazy-loaded dropdown can't prove a value is absent). Record the reason and a suggested
+  follow-up check. NEVER record PASS when the state was not actually observed.
 - FLAKY — failed then passed on a single controlled retry (see Flaky Handling)
 
 ## Flaky Handling
@@ -37,27 +40,42 @@ How to execute test cases against the running app via the Playwright MCP.
   default.
 
 ## Test Data Provisioning (self-setup)
-When a test case's precondition isn't met or required data is missing, CREATE it
-rather than blocking:
-- Preferred: run the prerequisite use case's create flow (from `Depends on`), using
-  a role allowed to create it.
-- Otherwise: create the minimal data through the app UI (or a documented API).
-- Use SYNTHETIC, clearly tagged values (e.g. prefix `QA-<runid>-`) so created data is
-  identifiable. No real PII.
-- Record every item provisioned (what, where, which role) in the run report.
-- Re-attempt the test case once the prerequisite exists.
-- Mark BLOCKED only if provisioning is genuinely impossible (no create path, needs a
-  privilege no available role has, or an ambiguous requirement → `TBD`).
-- Boundaries: provision only on the environment in `context.md` (never production);
-  no destructive setup on shared environments unless `context.md` authorizes it.
-- Provisioning sets up state; it must NOT fabricate the result under test — the
-  expected result still comes from the SRS.
+When a test case's precondition isn't met, decide by its precondition-feasibility:
+- **Self-serviceable (shallow, reversible):** CREATE it rather than blocking — run the
+  prerequisite use case's create flow (from `Depends on`) with a role allowed to create
+  it, or create the minimal data through the app UI / a documented API. Use SYNTHETIC,
+  tagged values, then re-attempt the case.
+- **Deep / irreversible / compound state** (e.g. a parent with dependents, workflow or
+  conversion config, an outward/irreversible action): do NOT build it live. Use a named
+  fixture from `docs/ai/test-fixtures.md`; if it is missing, mark the case
+  **BLOCKED — "seed fixture `<name>`"**. Build such state only when the user explicitly
+  authorizes it for the run, and log the residue.
+- Provisioning sets up state; it must NOT fabricate the result under test — the expected
+  result still comes from the SRS.
+- Boundaries: provision only on the environment in `context.md` (never production); no
+  destructive setup on shared environments unless `context.md` authorizes it.
 
 ## Data & Safety
 - Use only designated test accounts / data. No real PII.
-- Prefer reversible actions. No destructive actions on shared environments unless
-  `context.md` authorizes it.
-- Clean up created/provisioned test data when feasible; note anything left behind.
+- **Create your own disposable test data; never edit or delete records you did not
+  create.** Mutating another tester's existing records on a shared environment is not
+  allowed. Negative/destructive cases (e.g. "delete is blocked when X exists") must
+  target a **self-created record or a named fixture** — never a pre-existing shared one.
+- **Naming:** prefix data you create with a run tag, e.g. `QA_<runid>_` (use plain
+  alphanumeric such as `QA<runid>` where the field rejects special characters), so it is
+  traceable and removable.
+- Clean up created/provisioned data when feasible. Record anything left behind — and
+  anything **not cleanly removable** — in the run report's residue list.
+
+## Verification (confirming the expected state)
+- Confirm results from the actual persisted state, not the un-refreshed UI. Many lists
+  do NOT auto-refresh after Add/Update/Delete — **reload (or re-sort) before asserting**.
+- When the UI cannot confirm an expected state (e.g. a lazy-loaded dropdown can't prove
+  a value is absent; a value is on an unloaded page), try a reasonable alternative:
+  scroll to load, a scripted DOM check (Playwright `browser_evaluate`), or a read-only
+  network/API check. If still unconfirmable, record **INCONCLUSIVE** with the reason and
+  a suggested follow-up — do not guess PASS.
+- Consult `docs/ai/app-map.md` first to avoid re-deriving navigation/role/behavior facts.
 
 ## Evidence Storage
 - All run artifacts under `.qa-state/runs/<runid>/` (screenshots + result log).
@@ -67,11 +85,13 @@ rather than blocking:
 ## Run Report
 - Write a human-readable `RUN-REPORT.md` into `.qa-state/runs/<runid>/`:
   - Date, environment, app URL, scope (UC + regression)
-  - Totals: PASS / FAIL / BLOCKED / FLAKY
+  - Totals: PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY
   - Failures: TC — observed vs expected — evidence path
+  - Inconclusive: TC — reason the state couldn't be confirmed + suggested follow-up
   - Flaky: TC — both attempts
-  - Blocked: TC — reason (and what provisioning was attempted)
+  - Blocked: TC — reason (missing fixture/capability; what provisioning was attempted)
   - Provisioned data: what was created (tag), where, by which role, cleaned up? (y/n)
+  - Residue: anything left behind or not cleanly removable
   - Evidence folder path
 
 ## Output

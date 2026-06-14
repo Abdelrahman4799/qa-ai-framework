@@ -12,6 +12,8 @@
 - Priority (P1 critical … P3 low)
 - Type (positive / negative / boundary / permission / regression)
 - Preconditions (state, role, data needed)
+- Precondition-feasibility tag: `self-serviceable` | `needs-fixture: <name>` |
+  `needs-config` | `needs-live-action` (see generate-test-cases + `test-fixtures.md`)
 - Test data (explicit; no real PII)
 - Steps (numbered, one UI-observable action each, executable by Playwright MCP)
 - Expected result (taken from the SRS / new-feature SRS — cite the source)
