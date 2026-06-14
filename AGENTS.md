@@ -23,6 +23,8 @@ Read extra docs only when relevant:
 - Generating test cases for a use case → `docs/ai/test-case-standards.md` + the chosen UC's section
 - Executing tests in the app → `docs/ai/execution-policy.md`
 - Permissions / roles / test data → `docs/ai/test-data-policy.md` + `docs/ai/permission-matrix.md`
+- Coverage dimensions to walk → `docs/ai/coverage-dimensions.md`
+- Rulings not in the SRS (BA Q&A) → `docs/ai/decisions.md`
 - Deep / compound prerequisite states → `docs/ai/test-fixtures.md`
 - App navigation / known UI behavior → `docs/ai/app-map.md`
 - Logging a bug → `docs/ai/defect-policy.md`

@@ -77,6 +77,22 @@ When a test case's precondition isn't met, decide by its precondition-feasibilit
   a suggested follow-up — do not guess PASS.
 - Consult `docs/ai/app-map.md` first to avoid re-deriving navigation/role/behavior facts.
 
+## Role switching (login-as)
+- To test a case as a given role, log out and log in with that role's account
+  (`QA_<ROLE>_USER` / `QA_<ROLE>_PASS` from `.env`). Don't assume a single session
+  carries across roles.
+- Use the login path and any UI quirks recorded in `docs/ai/app-map.md` (e.g. a menu
+  that only renders at a wide viewport) so role coverage isn't re-derived each run.
+- Group cases by role where possible to minimise re-logins.
+
+## Multi-session / concurrency
+- For concurrency cases (pick-lock, first-wins, concurrent create/edit of the same
+  record), run a **second independent session** alongside the first — e.g. a separate
+  browser profile / incognito / second Playwright context — each logged in as its own
+  account.
+- Drive the two sessions in the required order and assert the contended outcome from
+  the persisted state (reload first). Use distinct, self-created data; clean up after.
+
 ## Evidence Storage
 - All run artifacts under `.qa-state/runs/<runid>/` (screenshots + result log).
 - One result record per test case: TC ID, status, evidence path(s),

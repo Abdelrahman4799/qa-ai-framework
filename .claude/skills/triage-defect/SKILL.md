@@ -11,9 +11,12 @@ description: Turn a failed test result into a clean, classified, reproducible de
 
 ## Steps
 1. Confirm it is a real defect
-   - Does the actual result contradict the SRS / new-feature SRS? If the spec is
-     silent or ambiguous, mark `TBD - needs team confirmation` instead of filing
+   - Does the actual result contradict the SRS / new-feature SRS / a `DEC-###`? If the
+     spec is silent or ambiguous, mark `TBD - needs team confirmation` instead of filing
      a confirmed bug.
+   - Consider non-functional defect classes too (see defect-policy.md): a **silent
+     blocked action / missing user feedback**, localization/RTL, theme/a11y, or audit
+     gaps are all reportable — not just wrong function output.
 2. Reproduce minimally
    - Re-run via Playwright MCP to confirm. Reduce to the smallest repro steps.
    - Note reproducibility (always / intermittent / once).

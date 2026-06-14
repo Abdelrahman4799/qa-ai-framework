@@ -10,6 +10,8 @@ app** and update it as the app changes.
 ## Login / entry
 - Default language / locale + how to switch: `TBD`
 - Post-login landing page per role: `TBD`
+- Role switch (login-as): how to log out and back in as another role; note any quirk
+  (e.g. a menu that only renders at a wide viewport): `TBD`
 
 ## Navigation map: feature → route → roles
 Fill from your app so execution can navigate without guessing.

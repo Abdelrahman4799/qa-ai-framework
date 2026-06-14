@@ -16,7 +16,9 @@ description: Execute a use case's test cases (plus its regression set) against t
    - Confirm the target environment from `context.md` (NEVER production).
    - Load credentials: dot-source `scripts/load_env.ps1` so each role's
      `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` (from `.env`) is available; log in as the
-     role each test case specifies.
+     role each test case specifies (log out/in to switch roles; for concurrency cases
+     drive a second session — see "Role switching" / "Multi-session" in execution-policy.md
+     and the login path in app-map.md).
    - ORDER by dependency: from the `Depends on` column, run a use case's
      prerequisite cases BEFORE it (or establish the prerequisite end-state as the
      precondition). Stop following a chain at a `TBD`/circular edge and report it.

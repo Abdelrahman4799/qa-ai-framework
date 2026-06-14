@@ -10,22 +10,28 @@ Turn traceability into a human-readable coverage view: what is covered, what is 
 ## Inputs
 - `test-cases/traceability.md`
 - `docs/ai/srs/_index.md` and `docs/ai/new-feature-srs/_index.md` (the UC/REQ universe)
+- `docs/ai/coverage-dimensions.md` (the dimension list)
 - Latest run results in `.qa-state/runs/` (for the "executed?" status), if any.
 
 ## Steps
-1. Build the universe — list all `UC-###` / `REQ-###` from the indexes in scope
-   (scope = "all", or a single use case + its related UCs to match a run).
+1. Build the universe — list all `UC-###` / `REQ-###` (+ `DEC-###`) from the indexes /
+   decisions in scope (scope = "all", or a single use case + its related UCs).
 2. For each, look up mapped test cases in `traceability.md`.
-3. Classify status:
+3. Classify requirement status:
    - COVERED — at least one test case exists AND was executed
    - PARTIAL — test case exists but not yet executed
    - GAP — no test case
-4. Write `test-cases/coverage.md` (table + gap summary + scope + last-updated date).
-5. Report the coverage figure (covered / total) and the list of gaps.
+4. Build the **dimension matrix**: per UC × each dimension in `coverage-dimensions.md`,
+   mark Covered / N/A (reason) / Gap — so skipped dimensions (e.g. no localization or
+   concurrency cases) are visible, not silent.
+5. Write `test-cases/coverage.md` (requirement table + dimension matrix + gap summary +
+   scope + last-updated date).
+6. Report the coverage figure (covered / total), the dimension gaps, and the list of gaps.
 
 ## Rules
-- Do not invent UCs/REQs — only those present in the indexes.
+- Do not invent UCs/REQs/DECs — only those present in the indexes/decisions.
 - Gaps are facts, not failures — list them plainly for the team to prioritize.
+- A dimension marked N/A must carry a one-line reason.
 
 ## Output
 - `coverage.md` written + a one-line coverage summary + the gaps list.

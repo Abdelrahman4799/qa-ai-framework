@@ -11,9 +11,10 @@ Never generate for the whole SRS.
 ## Inputs
 - The chosen use case (by ID, or picked from a catalog).
 - `docs/ai/new-feature-srs/_index.md`, `docs/ai/srs/_index.md` (tiny).
-- `docs/ai/test-case-standards.md`.
-- `docs/ai/test-fixtures.md` (named prerequisite states to reference instead of
-  building deep/irreversible state live).
+- `docs/ai/test-case-standards.md` and `docs/ai/coverage-dimensions.md`.
+- `docs/ai/test-fixtures.md` (named prerequisite states) and `docs/ai/app-map.md`
+  (navigation/role paths to reference in Test Data Preparation).
+- `docs/ai/decisions.md` (BA/product rulings not in the SRS — a valid source to cite).
 
 ## Steps
 
@@ -45,9 +46,23 @@ Never generate for the whole SRS.
    - Read just those related UC `Section`s from `docs/ai/srs/`.
 
 7. GENERATE
-   - For the chosen UC: derive scenarios (happy path, negative, boundary,
-     cross-UC interaction) and write test cases per test-case-standards.md
-     (TC-IDs, observable steps, expected results cited from the SRS section).
+   - COVERAGE DIMENSIONS: walk `docs/ai/coverage-dimensions.md` for the UC and, per
+     dimension, decide Covered / N/A (one-line reason) / Gap — so nothing is silently
+     skipped. Generate cases for each applicable dimension: functional, negative,
+     boundary, RBAC, cross-feature integration, concurrency/multi-session, list
+     operations, soft-delete+confirmation, audit; and (if the app has UI of that kind)
+     localization+RTL/LTR, theme, basic a11y. Record the per-dimension verdict for the
+     coverage report.
+   - Write cases per test-case-standards.md (TC-IDs, observable steps, expected results
+     cited from the SRS section or a `DEC-###`).
+   - DECISIONS: if a needed rule isn't in the SRS, check `docs/ai/decisions.md`; cite
+     the `DEC-###` as the source. If neither SRS nor a decision covers it, mark
+     `TBD - needs team confirmation` — do not invent the rule.
+   - TEST DATA PREPARATION: give each case an explicit build/navigation path (cite
+     `app-map.md` routes, reference a `test-fixtures.md` fixture, or values the steps
+     create). No hardcoded/invented dummy data; no real PII.
+   - CONSOLIDATE: merge redundant validation into one case (e.g. all mandatory-field
+     combinations together) rather than one trivial case per field.
    - DEPENDENCIES (`Depends on`): each case's preconditions must state the
      prerequisite UC(s) and the state they leave behind (e.g. "an order exists —
      UC-01"). The setup either runs the prerequisite first or asserts its end-state.
@@ -83,10 +98,12 @@ Never generate for the whole SRS.
    - Update `test-cases/traceability.md` (UC/REQ → TC).
 
 10. GOAL LOOP (/goal) — iterate to the best coverage
-    - GOAL: for the chosen UC, EVERY acceptance criterion and scenario type is covered —
-      happy, negative, boundary, permission (each actor positive + each non-actor denied),
-      and dependency preconditions; every case meets test-case-standards.md; traceability
-      is complete; expected results are cited from the SRS (not assumed); no real PII.
+    - GOAL: for the chosen UC, EVERY acceptance criterion is covered and EVERY applicable
+      coverage dimension (coverage-dimensions.md) is Covered or explicitly N/A — including
+      permission (each actor positive + each non-actor denied), dependencies, and (where
+      the app has them) localization/RTL, theme, list ops, concurrency. Every case meets
+      test-case-standards.md with a Test Data Preparation path and no dummy data;
+      traceability (UC + REQ/DEC) is complete; expected results cited (not assumed); no PII.
     - ITERATE (max 3 rounds, or stop early when a round adds nothing new):
       1. Self-critique the current cases against the GOAL — list missing ACs / scenarios /
          roles / edge cases / weak assertions.
