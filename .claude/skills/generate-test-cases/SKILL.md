@@ -22,9 +22,14 @@ Never generate for the whole SRS.
    - If the user named a UC, use it. Otherwise list the use-case catalog from the
      relevant `_index.md` and ask which one. Confirm the single scope.
 
-2. READ (minimal)
-   - Read only the chosen UC's `Section` (from the index) in full.
-   - Do NOT read the whole file or the whole SRS.
+2. UNDERSTAND the chosen UC (read its `Section` in full)
+   - Read the chosen UC's `Section` from the index IN FULL (not the whole SRS).
+   - Build a clear model before writing any case — extract:
+     · actors / roles · preconditions & postconditions
+     · the MAIN (happy) flow, every ALTERNATE flow, every EXCEPTION / error path
+     · business rules, validation rules, data entities & their states
+     · inputs/outputs and what is observable in the UI
+   - Note ambiguities as `TBD - needs team confirmation` (or cite a `DEC-###`).
 
 3. DISCOVER related + dependent use cases
    - From `_index.md`, read the chosen UC's `Depends on` (its prerequisites) and
@@ -42,10 +47,15 @@ Never generate for the whole SRS.
    - Write the confirmed relationships into `new-feature-srs/_index.md`
      ("Relates to existing" column) so future runs reuse them.
 
-6. READ related sections (only the confirmed ones)
-   - Read just those related UC `Section`s from `docs/ai/srs/`.
+6. UNDERSTAND the related UCs (read the confirmed sections)
+   - Read each confirmed related UC `Section` from `docs/ai/srs/`.
+   - Model the INTERACTIONS with the chosen UC: shared data/entities and their states,
+     ordering/prerequisite effects (`Depends on`), and what the chosen UC's changes do
+     downstream (reverse edges). This is what cross-feature/integration cases test.
 
 7. GENERATE
+   - SCENARIOS: cover the MAIN flow, EVERY alternate flow, and EVERY exception/error
+     path identified in steps 2 & 6 — not just happy/negative/boundary.
    - COVERAGE DIMENSIONS: walk `docs/ai/coverage-dimensions.md` for the UC and, per
      dimension, decide Covered / N/A (one-line reason) / Gap — so nothing is silently
      skipped. Generate cases for each applicable dimension: functional, negative,
@@ -98,8 +108,9 @@ Never generate for the whole SRS.
    - Update `test-cases/traceability.md` (UC/REQ → TC).
 
 10. GOAL LOOP (/goal) — iterate to the best coverage
-    - GOAL: for the chosen UC, EVERY acceptance criterion is covered and EVERY applicable
-      coverage dimension (coverage-dimensions.md) is Covered or explicitly N/A — including
+    - GOAL: for the chosen UC, EVERY flow (main / alternate / exception), EVERY acceptance
+      criterion, and EVERY applicable coverage dimension (coverage-dimensions.md) is
+      Covered or explicitly N/A — including
       permission (each actor positive + each non-actor denied), dependencies, and (where
       the app has them) localization/RTL, theme, list ops, concurrency. Every case meets
       test-case-standards.md with a Test Data Preparation path and no dummy data;

@@ -58,6 +58,10 @@ Use only the relevant skill:
   that is a POTENTIAL DEFECT — not the new expected behavior.
 - Scope every task to the **chosen use case** plus the related use cases you have
   confirmed with the user. Do not silently widen or narrow scope.
+- **Understand before generating:** model the chosen use case AND its confirmed related
+  use cases thoroughly — actors, main/alternate/exception flows, business rules, data
+  states, and cross-UC interactions — then cover **all** scenarios across every
+  applicable coverage dimension (`coverage-dimensions.md`). Never stop at the happy path.
 - Never invent requirements. If expected behavior is unclear, missing, or
   contradictory, mark it `TBD - needs team confirmation` and do not guess pass/fail.
 - Every test case must trace to a use-case ID (UC-###) and/or requirement ID.
