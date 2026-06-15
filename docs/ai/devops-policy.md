@@ -34,7 +34,12 @@
   then link the returned URL to the work item.
 - Find existing (de-dup) via WIQL:
   `POST {org}/{project}/_apis/wit/wiql?api-version=7.1`
-- Link work items (test case ↔ requirement/bug): use `relations` in the patch body.
+- Link work items: add to the `relations` array in the patch body, e.g.
+  `{"op":"add","path":"/relations/-","value":{"rel":"<linkType>","url":"<workItemUrl>"}}`.
+- **Bug ↔ Test Case link type:** `System.LinkTypes.Related` (default), or
+  `Microsoft.VSTS.Common.TestedBy-Reverse` if your process links bugs as tested-by a
+  test case. `TBD - confirm with team`. Every bug links to its source test case;
+  if that test case isn't in DevOps yet, create it first, then link.
 
 ## Upload Rules (hard-gated)
 - Do NOT upload until `.qa-state/review-passed.json` exists (review gate).

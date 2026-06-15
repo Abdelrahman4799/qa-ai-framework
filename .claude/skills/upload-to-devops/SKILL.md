@@ -26,14 +26,22 @@ description: Upload reviewed test cases and defects to Azure DevOps via the REST
    - Decide create vs update for each item.
 3. Dry-run
    - Print the exact JSON-patch payload and target fields per item. No secrets in output.
-4. Create / update work items
-   - Test cases → type `Test Case`; defects → type `Bug` (fields per devops-policy.md).
-   - `POST .../_apis/wit/workitems/${type}?api-version=7.1`
-     (Content-Type `application/json-patch+json`).
-5. Attach evidence
-   - Upload screenshots via `_apis/wit/attachments`, then link to the work item.
-6. Link relations
-   - Link test cases and bugs to their requirement / UC work items where IDs are known.
+4. Create / update TEST CASES first
+   - Test cases → type `Test Case` (fields per devops-policy.md).
+   - `POST .../_apis/wit/workitems/$Test Case?api-version=7.1`
+     (Content-Type `application/json-patch+json`). Keep a map: TC-ID → work item ID.
+5. Create BUGS and link each to its test case
+   - For each bug, find its source test case (the TC it came from):
+     · if that test case work item already exists (created in step 4 or found via WIQL)
+       → create the Bug, then **link it to that test case**;
+     · if the source test case does NOT exist yet → create the test case first
+       (step 4 flow), then create the Bug and link it.
+   - Link type per `devops-policy.md` (e.g. Bug ↔ Test Case "Related", or "Tested By").
+   - A bug must never be uploaded unlinked when it has a known source test case.
+6. Attach evidence + remaining relations
+   - Upload screenshots via `_apis/wit/attachments`, link to the work item.
+   - Link test cases (and bugs) to their requirement / UC / `DEC` work items where the
+     IDs are known.
 
 ## Output (final response)
 - Created / updated work item IDs + URLs (test cases and bugs).
