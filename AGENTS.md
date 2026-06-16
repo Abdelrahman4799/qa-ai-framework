@@ -45,6 +45,7 @@ Use only the relevant skill:
 - Build the use-case index (once per baseline) → `.claude/skills/index-srs/SKILL.md`
 - Generate test cases for a chosen use case → `.claude/skills/generate-test-cases/SKILL.md`
 - Execute test cases in the app → `.claude/skills/execute-test-cases/SKILL.md`
+- Session-based exploratory testing → `.claude/skills/exploratory-charter/SKILL.md`
 - Report requirement/use-case coverage → `.claude/skills/coverage-report/SKILL.md`
 - Triage / log a defect → `.claude/skills/triage-defect/SKILL.md`
 - Review results before upload → `.claude/skills/review-results/SKILL.md`

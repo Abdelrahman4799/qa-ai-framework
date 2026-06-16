@@ -85,7 +85,8 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 
 **Test pipeline**
 - `generate-test-cases` — for one chosen use case: discover related/dependent UCs, role-based + dependency-aware cases, regression set
-- `execute-test-cases` — run via Playwright MCP, capture evidence + run report (PASS / FAIL / BLOCKED / FLAKY)
+- `execute-test-cases` — run via Playwright MCP, capture evidence + run report (PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY)
+- `exploratory-charter` — time-boxed session-based exploratory testing; findings feed triage/generate/decisions
 - `triage-defect` — turn real failures (contradicting the SRS) into classified, reproducible bugs
 - `review-results` — the human review **gate**; on pass writes the upload marker
 - `upload-to-devops` — create Test Case + Bug work items via Azure DevOps REST + PAT
@@ -126,7 +127,7 @@ test-cases/      generated cases (persist, per use case) + traceability + covera
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
 .claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
-                 review, upload, coverage, self-heal, save-session (12)
+                 review, upload, coverage, exploratory, self-heal, save-session (13)
 .claude/         hooks (6) + settings
 scripts/         ingest_srs.ps1, doctor.ps1
 ```
