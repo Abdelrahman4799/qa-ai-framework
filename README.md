@@ -85,7 +85,7 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 - `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + fingerprint
 
 **Test pipeline**
-- `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and dimension using formal test-design techniques (equivalence/boundary/decision-table/state/pairwise) with concrete values + precise oracles, role-based + dependency-aware, link to baseline cases, adversarial `/goal` loop
+- `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and dimension using formal test-design techniques (equivalence/boundary/decision-table/state/pairwise) with concrete values + precise oracles, role-based + dependency-aware, link to baseline cases, adversarial `/goal` loop; saved as **CSV** (one row per case)
 - `execute-test-cases` — run via Playwright MCP (optional parallel runners), auto-provision data (UI or API), fixtures, verify from persisted state, `/goal` loop; run report (PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY)
 - `exploratory-charter` — time-boxed session-based exploratory testing; findings feed triage/generate/decisions
 - `triage-defect` — turn real failures (vs SRS/DEC) into classified bugs, incl. non-functional classes (silent failure, l10n/RTL, theme/a11y, audit)

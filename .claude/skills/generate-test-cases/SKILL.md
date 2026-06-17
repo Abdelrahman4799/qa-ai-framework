@@ -134,7 +134,8 @@ Never generate for the whole SRS.
      This link is carried into Azure DevOps by upload-to-devops.
 
 9. WRITE
-   - Save cases under `test-cases/<UC-ID>/`.
+   - Save cases as **CSV, one row per case**, at `test-cases/<UC-ID>/<UC-ID>.csv`
+     using the CSV schema + escaping rules in `test-case-standards.md`.
    - Update `test-cases/traceability.md` (UC/REQ/DEC → TC, + Related baseline TCs for
      the new-feature UC).
 

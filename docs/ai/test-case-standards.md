@@ -37,6 +37,22 @@
 - Source: new-feature-srs/<file>.md ## <section>  (or srs/<file>.md, or DEC-###)
 ```
 
+## CSV Output (the saved format)
+Generated cases are saved as **CSV — one row per test case** — at
+`test-cases/<UC-ID>/<UC-ID>.csv` (UTF-8, RFC 4180).
+
+Header (exact column order):
+```
+TC ID,Title,UC,REQ,DEC,Priority,Type,Dimension,Feasibility,Preconditions,Test Data Preparation,Steps,Expected Result,Related Baseline TCs,Source
+```
+Rules:
+- Quote any field containing a comma, double-quote, or newline; escape an internal `"`
+  by doubling it (`""`). Always include the header row. UTF-8 (no BOM).
+- `Steps`: numbered, one per line inside the quoted cell, as `1. <action> => <expected>`.
+- Leave optional fields blank when empty (e.g. no `DEC`).
+- One CSV per use case. For an Azure DevOps Excel/grid import you can also produce a
+  step-per-row variant (see `devops-policy.md`); the REST upload path doesn't need CSV.
+
 ## Step-Writing Rules
 - One action per step ("Click Login", "Enter <email> in the Email field").
 - Each asserting step has an observable expected result.

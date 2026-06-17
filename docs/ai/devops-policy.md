@@ -41,6 +41,13 @@
   test case. `TBD - confirm with team`. Every bug links to its source test case;
   if that test case isn't in DevOps yet, create it first, then link.
 
+## CSV import (optional alternative to the REST upload)
+- Generated cases are saved as CSV (`test-cases/<UC-ID>/<UC-ID>.csv`, one row per case).
+- The REST upload path above does NOT need CSV. If the team prefers Azure DevOps' Excel/
+  grid **Import test cases**, produce a step-per-row variant: one row per step, the Title
+  and fields on the first row of each case, then `Test Step / Step Action / Step Expected`
+  rows. `TBD - confirm the team's preferred path (REST vs CSV import)`.
+
 ## Upload Rules (hard-gated)
 - Do NOT upload until `.qa-state/review-passed.json` exists (review gate).
   (Enforced by the guard_upload hook.)
