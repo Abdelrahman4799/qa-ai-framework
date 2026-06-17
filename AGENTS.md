@@ -63,6 +63,14 @@ Use only the relevant skill:
   use cases thoroughly — actors, main/alternate/exception flows, business rules, data
   states, and cross-UC interactions — then cover **all** scenarios across every
   applicable coverage dimension (`coverage-dimensions.md`). Never stop at the happy path.
+- **Cover every SRS statement:** treat each sentence/clause in the UC section as a
+  testable item — map it to a case or mark it explicitly N/A. Ignore nothing.
+- **Link new-feature ↔ baseline:** always link a new-feature use case to its related /
+  likely-impacted baseline test cases (persist in traceability; carried into DevOps).
+- **Test data prep may use the API** when it is faster/available; the behavior under
+  test is still exercised through the UI unless the case is itself an API test.
+- **Parallel execution:** ask the user how many runners to use; only parallelise
+  independent cases and isolate each runner's session/account/data.
 - Never invent requirements. If expected behavior is unclear, missing, or
   contradictory, mark it `TBD - needs team confirmation` and do not guess pass/fail.
 - Every test case must trace to a use-case ID (UC-###) and/or requirement ID.

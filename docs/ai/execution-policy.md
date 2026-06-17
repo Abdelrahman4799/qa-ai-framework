@@ -43,8 +43,10 @@ How to execute test cases against the running app via the Playwright MCP.
 When a test case's precondition isn't met, decide by its precondition-feasibility:
 - **Self-serviceable (shallow, reversible):** CREATE it rather than blocking — run the
   prerequisite use case's create flow (from `Depends on`) with a role allowed to create
-  it, or create the minimal data through the app UI / a documented API. Use SYNTHETIC,
-  tagged values, then re-attempt the case.
+  it, or create the minimal data through the app UI / a documented API. **Prefer the API
+  for data setup when it is available and faster** — it keeps prep quick and reliable;
+  the behavior under test is still exercised/asserted through the UI (unless the case is
+  itself an API test). Use SYNTHETIC, tagged values, then re-attempt the case.
 - **Deep / irreversible / compound state** (e.g. a parent with dependents, workflow or
   conversion config, an outward/irreversible action): do NOT build it live. Use a named
   fixture from `docs/ai/test-fixtures.md`; if it is missing, mark the case
@@ -76,6 +78,18 @@ When a test case's precondition isn't met, decide by its precondition-feasibilit
   network/API check. If still unconfirmable, record **INCONCLUSIVE** with the reason and
   a suggested follow-up — do not guess PASS.
 - Consult `docs/ai/app-map.md` first to avoid re-deriving navigation/role/behavior facts.
+
+## Parallel execution (runners)
+- At the start of a run, **ask the user how many parallel runners** to use (default 1).
+- Partition only INDEPENDENT cases across runners. Keep together (same runner / serial):
+  cases with a `Depends on` chain, cases sharing a fixture or mutating the same record,
+  and ordered steps — so runners don't collide.
+- Isolate each runner: its own browser context/session, its own role account where
+  possible, and a per-runner data tag (e.g. `QA_<runid>_r<N>_`) so created data never
+  clashes. Stay within the environment's capacity / rate limits.
+- Concurrency test cases (multi-session, below) are their own thing — don't conflate
+  them with runner parallelism.
+- Aggregate all runners' results into one run report; evidence stays under the run folder.
 
 ## Role switching (login-as)
 - To test a case as a given role, log out and log in with that role's account

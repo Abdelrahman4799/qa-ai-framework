@@ -29,6 +29,9 @@ Never generate for the whole SRS.
      · the MAIN (happy) flow, every ALTERNATE flow, every EXCEPTION / error path
      · business rules, validation rules, data entities & their states
      · inputs/outputs and what is observable in the UI
+   - ENUMERATE EVERY STATEMENT: treat each sentence / clause / rule in the section as a
+     testable item and track it to ≥1 test case, or an explicit N/A with a reason.
+     Do NOT skip any sentence — nothing in the SRS section is ignored.
    - Note ambiguities as `TBD - needs team confirmation` (or cite a `DEC-###`).
 
 3. DISCOVER related + dependent use cases
@@ -98,23 +101,32 @@ Never generate for the whole SRS.
      For data-scoped rules (e.g. "Manager — own team only"), add a positive case
      in-scope and a negative case out-of-scope where the matrix flags it.
 
-8. SELECT the regression set
-   - From `test-cases/traceability.md`, collect existing TCs covering the related
-     UCs AND the impact set (UCs that depend on the chosen one — reverse edges).
-     Where such a UC has no cases yet, generate them too.
+8. SELECT & LINK the related baseline test cases
+   - From `test-cases/traceability.md`, collect existing baseline SRS test cases that
+     cover the related UCs AND the impact set (UCs that depend on the chosen one —
+     reverse edges) — i.e. the regression / likely-impacted set. Where such a UC has no
+     cases yet, generate them too.
+   - ALWAYS LINK: record the link from the chosen new-feature UC to those related
+     baseline TC IDs, and persist it:
+       · `test-cases/traceability.md` → the new-feature UC's "Related baseline TCs" column
+       · `docs/ai/new-feature-srs/_index.md` → note the related TC IDs alongside the
+         "Relates to existing" UCs
+     This link is carried into Azure DevOps by upload-to-devops.
 
 9. WRITE
    - Save cases under `test-cases/<UC-ID>/`.
-   - Update `test-cases/traceability.md` (UC/REQ → TC).
+   - Update `test-cases/traceability.md` (UC/REQ/DEC → TC, + Related baseline TCs for
+     the new-feature UC).
 
 10. GOAL LOOP (/goal) — iterate to the best coverage
-    - GOAL: for the chosen UC, EVERY flow (main / alternate / exception), EVERY acceptance
-      criterion, and EVERY applicable coverage dimension (coverage-dimensions.md) is
-      Covered or explicitly N/A — including
+    - GOAL: for the chosen UC, EVERY SRS statement/sentence in the section, EVERY flow
+      (main / alternate / exception), EVERY acceptance criterion, and EVERY applicable
+      coverage dimension (coverage-dimensions.md) is Covered or explicitly N/A — including
       permission (each actor positive + each non-actor denied), dependencies, and (where
       the app has them) localization/RTL, theme, list ops, concurrency. Every case meets
       test-case-standards.md with a Test Data Preparation path and no dummy data;
-      traceability (UC + REQ/DEC) is complete; expected results cited (not assumed); no PII.
+      traceability (UC + REQ/DEC) is complete and the new-feature UC is linked to its
+      related baseline TCs; expected results cited (not assumed); no PII.
     - ITERATE (max 3 rounds, or stop early when a round adds nothing new):
       1. Self-critique the current cases against the GOAL — list missing ACs / scenarios /
          roles / edge cases / weak assertions.

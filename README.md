@@ -84,13 +84,13 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 - `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + fingerprint
 
 **Test pipeline**
-- `generate-test-cases` — for one chosen use case: discover related/dependent UCs, role-based + dependency-aware cases, regression set
-- `execute-test-cases` — run via Playwright MCP, capture evidence + run report (PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY)
+- `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and every coverage dimension, role-based + dependency-aware, link to related baseline test cases, `/goal` loop to full coverage
+- `execute-test-cases` — run via Playwright MCP (optional parallel runners), auto-provision data (UI or API), fixtures, verify from persisted state, `/goal` loop; run report (PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY)
 - `exploratory-charter` — time-boxed session-based exploratory testing; findings feed triage/generate/decisions
-- `triage-defect` — turn real failures (contradicting the SRS) into classified, reproducible bugs
+- `triage-defect` — turn real failures (vs SRS/DEC) into classified bugs, incl. non-functional classes (silent failure, l10n/RTL, theme/a11y, audit)
 - `review-results` — the human review **gate**; on pass writes the upload marker
-- `upload-to-devops` — create Test Case + Bug work items via Azure DevOps REST + PAT
-- `coverage-report` — requirement / use-case coverage and gaps
+- `upload-to-devops` — create Test Case + Bug work items; link each bug to its test case, and new-feature cases to related baseline cases
+- `coverage-report` — requirement coverage + per-dimension matrix and gaps
 
 **Maintenance**
 - `self-heal` — propose rule/skill improvements (applied only after your approval)
@@ -121,15 +121,17 @@ See `.claude/skills/self-heal/SKILL.md`.
 ## Layout
 
 ```
-docs/ai/         context + policies + SRS (baseline) + new-feature SRS
-                 + handoff.md (small "where we left off", read each session)
+docs/ai/         context · handoff · policies (test-case-standards, execution,
+                 defect, devops, test-data) · coverage-dimensions · decisions ·
+                 test-fixtures · app-map · permission-matrix · glossary
+                 + srs/ (baseline) and new-feature-srs/ (your documents)
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
-.claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/triage,
-                 review, upload, coverage, exploratory, self-heal, save-session (13)
+.claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/exploratory,
+                 triage, review, upload, coverage, self-heal, save-session (13)
 .claude/         hooks (6) + settings
-scripts/         ingest_srs.ps1, doctor.ps1
+scripts/         ingest_srs.ps1, doctor.ps1, set_env.ps1, load_env.ps1
 ```
 
 > Docs: [OVERVIEW](OVERVIEW.md) · [QUICKSTART](QUICKSTART.md) · [ARCHITECTURE](ARCHITECTURE.md) · [EXTENDING](EXTENDING.md) · [framework-diagram.html](framework-diagram.html)

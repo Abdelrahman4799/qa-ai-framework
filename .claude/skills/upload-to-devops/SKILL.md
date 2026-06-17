@@ -42,6 +42,9 @@ description: Upload reviewed test cases and defects to Azure DevOps via the REST
    - Upload screenshots via `_apis/wit/attachments`, link to the work item.
    - Link test cases (and bugs) to their requirement / UC / `DEC` work items where the
      IDs are known.
+   - NEW-FEATURE ↔ BASELINE: link a new-feature use case's test cases to their
+     "Related baseline TCs" (from traceability.md) so the regression relationship is
+     visible in DevOps (use the Related link type per devops-policy.md).
 
 ## Output (final response)
 - Created / updated work item IDs + URLs (test cases and bugs).
