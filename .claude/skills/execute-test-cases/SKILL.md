@@ -16,8 +16,9 @@ description: Execute a use case's test cases (plus its regression set) against t
    - Confirm the target environment from `context.md` (NEVER production).
    - PARALLELISM: ask the user how many parallel runners to use (default 1). Partition
      only independent cases across runners; keep dependency chains / shared-fixture /
-     same-record cases together; isolate each runner (own session, role account,
-     `QA_<runid>_r<N>_` data tag). See "Parallel execution" in execution-policy.md.
+     same-record cases together; isolate each runner by its own browser context/profile
+     (NOT a separate account — the same role account can be reused) plus a
+     `QA_<runid>_r<N>_` data tag. See "Parallel execution" in execution-policy.md.
    - Load credentials: dot-source `scripts/load_env.ps1` so each role's
      `QA_<ROLE>_USER` / `QA_<ROLE>_PASS` (from `.env`) is available; log in as the
      role each test case specifies (log out/in to switch roles; for concurrency cases

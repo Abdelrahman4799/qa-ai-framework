@@ -84,9 +84,10 @@ When a test case's precondition isn't met, decide by its precondition-feasibilit
 - Partition only INDEPENDENT cases across runners. Keep together (same runner / serial):
   cases with a `Depends on` chain, cases sharing a fixture or mutating the same record,
   and ordered steps — so runners don't collide.
-- Isolate each runner: its own browser context/session, its own role account where
-  possible, and a per-runner data tag (e.g. `QA_<runid>_r<N>_`) so created data never
-  clashes. Stay within the environment's capacity / rate limits.
+- Isolate each runner by its **own browser context / profile** (NOT a separate account)
+  plus a per-runner data tag (e.g. `QA_<runid>_r<N>_`) so created data never clashes. The
+  SAME role account can be reused across runners — each logs in independently in its own
+  isolated context. Stay within the environment's capacity / rate limits.
 - Concurrency test cases (multi-session, below) are their own thing — don't conflate
   them with runner parallelism.
 - Aggregate all runners' results into one run report; evidence stays under the run folder.
@@ -106,10 +107,12 @@ When a test case's precondition isn't met, decide by its precondition-feasibilit
 - **Reality check:** a single agent issues tool calls SEQUENTIALLY, so multiple tabs/
   contexts driven by one agent are *interleaved* (you save on overlapping waits, not true
   parallelism). Real speedup comes from multiple MCP instances or multiple worker subagents.
-- Map **one runner → one MCP instance / subagent + one role account + the
-  `QA_<runid>_r<N>_` data tag**. Each runner needs its OWN account (logins in the same
-  context conflict). If only one browser/instance is available, fall back to 1 runner and
-  say so — and prefer API data prep to recover the time.
+- Map **one runner → one MCP instance / subagent (its own browser context/profile) + the
+  `QA_<runid>_r<N>_` data tag**. Isolation is per browser context, NOT per account — the
+  same role account may be reused across runners (each logs in independently in its own
+  context). Use different accounts only if the app forbids concurrent sessions for one user.
+  If only one browser/instance is available, fall back to 1 runner and say so — and prefer
+  API data prep to recover the time.
 
 ## Role switching (login-as)
 - To test a case as a given role, log out and log in with that role's account
