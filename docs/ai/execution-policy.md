@@ -91,6 +91,26 @@ When a test case's precondition isn't met, decide by its precondition-feasibilit
   them with runner parallelism.
 - Aggregate all runners' results into one run report; evidence stays under the run folder.
 
+### How to actually run N browsers (Playwright MCP)
+- **Same role, multiple pages** → use the MCP tab tools (`browser_tabs`: new / select /
+  close). Tabs share ONE browser context (cookies/auth) — fine for parallel pages of the
+  SAME login, but NOT for different roles.
+- **Different roles / true isolation** → tabs won't work (shared auth). Use either:
+  - **Multiple Playwright MCP server instances**, each with its own profile, configured in
+    your Claude Code MCP settings, e.g.
+    `playwright_admin → npx @playwright/mcp@latest --user-data-dir=<dir-admin>` and
+    `playwright_viewer → ... --user-data-dir=<dir-viewer>` (or `--isolated` for an
+    ephemeral profile). Each instance = one isolated browser/driver.
+  - **Multiple worker subagents**, each with its own browser instance — best for genuine
+    concurrency.
+- **Reality check:** a single agent issues tool calls SEQUENTIALLY, so multiple tabs/
+  contexts driven by one agent are *interleaved* (you save on overlapping waits, not true
+  parallelism). Real speedup comes from multiple MCP instances or multiple worker subagents.
+- Map **one runner → one MCP instance / subagent + one role account + the
+  `QA_<runid>_r<N>_` data tag**. Each runner needs its OWN account (logins in the same
+  context conflict). If only one browser/instance is available, fall back to 1 runner and
+  say so — and prefer API data prep to recover the time.
+
 ## Role switching (login-as)
 - To test a case as a given role, log out and log in with that role's account
   (`QA_<ROLE>_USER` / `QA_<ROLE>_PASS` from `.env`). Don't assume a single session
