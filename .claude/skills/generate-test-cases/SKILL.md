@@ -71,6 +71,13 @@ Never generate for the whole SRS.
      message, state, or persisted value) — never "it works".
    - SCENARIOS: cover the MAIN flow, EVERY alternate flow, and EVERY exception/error
      path identified in steps 2 & 6 — not just happy/negative/boundary.
+   - NEGATIVE (where applicable): for inputs, actions, and rules that can fail, generate
+     the negative/invalid counterpart too — see the negative checklist in
+     `coverage-dimensions.md` (missing/empty/null, wrong type/format, out of range,
+     duplicate, invalid reference, unauthorized, wrong state, cancel/double-submit,
+     expired/timeout, malformed). Each negative case asserts the EXACT error / handling
+     (message, rejection, blocked action), not just "fails". If a negative genuinely
+     doesn't apply, mark it N/A with a reason — don't force it.
    - COVERAGE DIMENSIONS: walk `docs/ai/coverage-dimensions.md` for the UC and, per
      dimension, decide Covered / N/A (one-line reason) / Gap — so nothing is silently
      skipped. Generate cases for each applicable dimension: functional, negative,
@@ -144,7 +151,8 @@ Never generate for the whole SRS.
       1. CRITIQUE ADVERSARIALLY — assume the suite is too shallow until proven otherwise.
          For each requirement, list its equivalence classes, boundaries, decision-table
          rules, and states, and check each has a case. Flag: missing classes/boundaries/
-         rules/states, vague steps, and weak/imprecise expected results ("works", "no error").
+         rules/states, **any applicable positive case lacking its negative counterpart**,
+         vague steps, and weak/imprecise expected results ("works", "no error").
       2. Add or STRENGTHEN cases to close each gap — concrete values, precise oracles;
          re-save and update traceability.
       3. Re-check. Stop only when the critique finds nothing, or after 3 rounds (report

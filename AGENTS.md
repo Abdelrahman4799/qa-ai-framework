@@ -69,8 +69,9 @@ Use only the relevant skill:
 - **Design strong cases, not shallow ones:** apply test-design techniques
   (`test-design-techniques.md`) — equivalence partitioning, boundary analysis, decision
   tables, state-transition, pairwise — with concrete values and a precise expected
-  result/oracle. The `/goal` loop critiques adversarially; never declare strong coverage
-  you didn't actually reach.
+  result/oracle. Cover negative/invalid scenarios **where applicable** (each asserting its
+  exact error/handling; mark N/A with a reason when one can't occur). The `/goal` loop
+  critiques adversarially; never declare strong coverage you didn't actually reach.
 - **Link new-feature ↔ baseline:** always link a new-feature use case to its related /
   likely-impacted baseline test cases (persist in traceability; carried into DevOps).
 - **Test data prep may use the API** when it is faster/available; the behavior under
