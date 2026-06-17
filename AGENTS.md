@@ -24,6 +24,7 @@ Read extra docs only when relevant:
 - Executing tests in the app → `docs/ai/execution-policy.md`
 - Permissions / roles / test data → `docs/ai/test-data-policy.md` + `docs/ai/permission-matrix.md`
 - Coverage dimensions to walk → `docs/ai/coverage-dimensions.md`
+- How to derive strong cases (techniques) → `docs/ai/test-design-techniques.md`
 - Rulings not in the SRS (BA Q&A) → `docs/ai/decisions.md`
 - Deep / compound prerequisite states → `docs/ai/test-fixtures.md`
 - App navigation / known UI behavior → `docs/ai/app-map.md`
@@ -65,6 +66,11 @@ Use only the relevant skill:
   applicable coverage dimension (`coverage-dimensions.md`). Never stop at the happy path.
 - **Cover every SRS statement:** treat each sentence/clause in the UC section as a
   testable item — map it to a case or mark it explicitly N/A. Ignore nothing.
+- **Design strong cases, not shallow ones:** apply test-design techniques
+  (`test-design-techniques.md`) — equivalence partitioning, boundary analysis, decision
+  tables, state-transition, pairwise — with concrete values and a precise expected
+  result/oracle. The `/goal` loop critiques adversarially; never declare strong coverage
+  you didn't actually reach.
 - **Link new-feature ↔ baseline:** always link a new-feature use case to its related /
   likely-impacted baseline test cases (persist in traceability; carried into DevOps).
 - **Test data prep may use the API** when it is faster/available; the behavior under

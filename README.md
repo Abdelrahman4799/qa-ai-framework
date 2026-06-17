@@ -85,7 +85,7 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 - `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + fingerprint
 
 **Test pipeline**
-- `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and every coverage dimension, role-based + dependency-aware, link to related baseline test cases, `/goal` loop to full coverage
+- `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and dimension using formal test-design techniques (equivalence/boundary/decision-table/state/pairwise) with concrete values + precise oracles, role-based + dependency-aware, link to baseline cases, adversarial `/goal` loop
 - `execute-test-cases` — run via Playwright MCP (optional parallel runners), auto-provision data (UI or API), fixtures, verify from persisted state, `/goal` loop; run report (PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY)
 - `exploratory-charter` — time-boxed session-based exploratory testing; findings feed triage/generate/decisions
 - `triage-defect` — turn real failures (vs SRS/DEC) into classified bugs, incl. non-functional classes (silent failure, l10n/RTL, theme/a11y, audit)
@@ -123,8 +123,8 @@ See `.claude/skills/self-heal/SKILL.md`.
 
 ```
 docs/ai/         context · handoff · policies (test-case-standards, execution,
-                 defect, devops, test-data) · coverage-dimensions · decisions ·
-                 test-fixtures · app-map · permission-matrix · glossary
+                 defect, devops, test-data) · coverage-dimensions · test-design-techniques ·
+                 decisions · test-fixtures · app-map · permission-matrix · glossary
                  + srs/ (baseline) and new-feature-srs/ (your documents)
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)

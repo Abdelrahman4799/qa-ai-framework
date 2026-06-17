@@ -11,7 +11,8 @@ Never generate for the whole SRS.
 ## Inputs
 - The chosen use case (by ID, or picked from a catalog).
 - `docs/ai/new-feature-srs/_index.md`, `docs/ai/srs/_index.md` (tiny).
-- `docs/ai/test-case-standards.md` and `docs/ai/coverage-dimensions.md`.
+- `docs/ai/test-case-standards.md`, `docs/ai/coverage-dimensions.md`, and
+  `docs/ai/test-design-techniques.md` (how to derive strong cases).
 - `docs/ai/test-fixtures.md` (named prerequisite states) and `docs/ai/app-map.md`
   (navigation/role paths to reference in Test Data Preparation).
 - `docs/ai/decisions.md` (BA/product rulings not in the SRS — a valid source to cite).
@@ -57,6 +58,17 @@ Never generate for the whole SRS.
      downstream (reverse edges). This is what cross-feature/integration cases test.
 
 7. GENERATE
+   - TECHNIQUES (this is what makes coverage strong, not shallow): for each requirement /
+     input / rule, apply the right test-design technique from
+     `docs/ai/test-design-techniques.md` and ENUMERATE before writing —
+       · inputs → equivalence partitioning + boundary value analysis (one case per class
+         and per boundary, with CONCRETE values);
+       · combinational rules → a decision table (a case per rule);
+       · stateful entities → state-transition (valid + invalid transitions);
+       · interacting parameters → pairwise;
+       · plus error guessing for likely failure points.
+     Every case has CONCRETE input values and a PRECISE expected result / oracle (exact
+     message, state, or persisted value) — never "it works".
    - SCENARIOS: cover the MAIN flow, EVERY alternate flow, and EVERY exception/error
      path identified in steps 2 & 6 — not just happy/negative/boundary.
    - COVERAGE DIMENSIONS: walk `docs/ai/coverage-dimensions.md` for the UC and, per
@@ -74,8 +86,9 @@ Never generate for the whole SRS.
    - TEST DATA PREPARATION: give each case an explicit build/navigation path (cite
      `app-map.md` routes, reference a `test-fixtures.md` fixture, or values the steps
      create). No hardcoded/invented dummy data; no real PII.
-   - CONSOLIDATE: merge redundant validation into one case (e.g. all mandatory-field
-     combinations together) rather than one trivial case per field.
+   - CONSOLIDATE carefully: merge only TRULY redundant cases (same equivalence class /
+     same path). NEVER merge away a distinct equivalence class, boundary, decision-table
+     rule, or state — consolidation must not reduce coverage.
    - DEPENDENCIES (`Depends on`): each case's preconditions must state the
      prerequisite UC(s) and the state they leave behind (e.g. "an order exists —
      UC-01"). The setup either runs the prerequisite first or asserts its end-state.
@@ -128,10 +141,14 @@ Never generate for the whole SRS.
       traceability (UC + REQ/DEC) is complete and the new-feature UC is linked to its
       related baseline TCs; expected results cited (not assumed); no PII.
     - ITERATE (max 3 rounds, or stop early when a round adds nothing new):
-      1. Self-critique the current cases against the GOAL — list missing ACs / scenarios /
-         roles / edge cases / weak assertions.
-      2. Add or strengthen cases to close each gap; re-save and update traceability.
-      3. Re-check. Stop when no new gap is found or after 3 rounds.
+      1. CRITIQUE ADVERSARIALLY — assume the suite is too shallow until proven otherwise.
+         For each requirement, list its equivalence classes, boundaries, decision-table
+         rules, and states, and check each has a case. Flag: missing classes/boundaries/
+         rules/states, vague steps, and weak/imprecise expected results ("works", "no error").
+      2. Add or STRENGTHEN cases to close each gap — concrete values, precise oracles;
+         re-save and update traceability.
+      3. Re-check. Stop only when the critique finds nothing, or after 3 rounds (report
+         any residual weakness honestly — do not declare strong coverage you didn't reach).
     - Report final coverage vs the GOAL and any residual gaps (as `TBD` / known limits).
 
 ## Output

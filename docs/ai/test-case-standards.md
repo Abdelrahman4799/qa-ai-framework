@@ -51,6 +51,17 @@
   steps or expected results genuinely differ.
 - Ambiguities recorded as `TBD - needs team confirmation`, never guessed.
 
+## Strength rubric (strong vs weak — reject weak)
+A case is **strong** only if it is derived from a test-design technique
+(`docs/ai/test-design-techniques.md`) and has:
+- **Concrete input values** chosen by equivalence partitioning / boundary analysis —
+  never "some value".
+- A **precise expected result / oracle** — the exact message, state, or persisted value
+  to observe — never "it works" / "no error".
+- **One clear objective**, deterministic, traceable.
+Coverage is **strong** only if every equivalence class, boundary, decision-table rule,
+and state for the requirement has a case. One happy-path case per requirement is **weak**.
+
 ## Requirement-ID policy (when the SRS has no REQ IDs)
 If the SRS does not number its requirements, do not leave traceability empty. Trace
 each case to the SRS section / business-rule / flow reference, a `DEC-###`, or an
