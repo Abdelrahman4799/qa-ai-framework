@@ -32,9 +32,11 @@ Keep this short. It is the only doc read on every task.
 - In scope: functional black-box testing of the chosen use case.
 - Out of scope (unless explicitly authorized): destructive tests on shared
   environments, performance/load, security penetration.
-- Test data: the AI MAY auto-provision missing prerequisites/data (synthetic,
-  tagged `QA-<runid>-`, cleaned up when feasible) on test/staging only — never
-  production. Set to `no` here to forbid provisioning: `provisioning = yes`
+- Test data: the AI creates whatever data a case needs to avoid BLOCKED — provisioning
+  and system control done via the **Admin** account; unspecified input values (mobile,
+  email…) are assumed as synthetic, tagged `QA_<runid>_`, on test/staging only (never
+  production), and recorded as residue. BLOCKED only when even Admin can't (external /
+  irreversible real-world). Set to `no` to forbid provisioning: `provisioning = yes`
 
 ## Review Gate
 - Default: HUMAN approval required before any DevOps upload.

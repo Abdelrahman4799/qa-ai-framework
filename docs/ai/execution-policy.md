@@ -21,8 +21,9 @@ How to execute test cases against the running app via the Playwright MCP.
 ## Result States
 - PASS — observed == expected
 - FAIL — observed != expected (candidate defect → triage-defect skill)
-- BLOCKED — could not execute (missing prerequisite/fixture, environment, data, or
-  capability). Name the missing fixture/capability — see `docs/ai/test-fixtures.md`.
+- BLOCKED — could not execute even after creating data/state as Admin: it needs an
+  external system, a capability no role has, or an irreversible real-world action. Name
+  exactly what's missing. (Last resort — see Test Data Provisioning.)
 - INCONCLUSIVE — executed, but the UI could not confirm the expected state (e.g. a
   lazy-loaded dropdown can't prove a value is absent). Record the reason and a suggested
   follow-up check. NEVER record PASS when the state was not actually observed.
@@ -39,23 +40,30 @@ How to execute test cases against the running app via the Playwright MCP.
 - Report FLAKY cases separately — they need human attention, not a bug report by
   default.
 
-## Test Data Provisioning (self-setup)
-When a test case's precondition isn't met, decide by its precondition-feasibility:
-- **Self-serviceable (shallow, reversible):** CREATE it rather than blocking — run the
-  prerequisite use case's create flow (from `Depends on`) with a role allowed to create
-  it, or create the minimal data through the app UI / a documented API. **Prefer the API
-  for data setup when it is available and faster** — it keeps prep quick and reliable;
-  the behavior under test is still exercised/asserted through the UI (unless the case is
-  itself an API test). Use SYNTHETIC, tagged values, then re-attempt the case.
-- **Deep / irreversible / compound state** (e.g. a parent with dependents, workflow or
-  conversion config, an outward/irreversible action): do NOT build it live. Use a named
-  fixture from `docs/ai/test-fixtures.md`; if it is missing, mark the case
-  **BLOCKED — "seed fixture `<name>`"**. Build such state only when the user explicitly
-  authorizes it for the run, and log the residue.
-- Provisioning sets up state; it must NOT fabricate the result under test — the expected
-  result still comes from the SRS.
-- Boundaries: provision only on the environment in `context.md` (never production); no
-  destructive setup on shared environments unless `context.md` authorizes it.
+## Test Data Provisioning (create what's needed — minimise BLOCKED)
+Standing authorization: **create the data and state a case needs rather than blocking.**
+- **Control/setup as ADMIN:** by default use the Admin account to create, configure, and
+  clean up prerequisite data and system state (Admin can control anything in the system).
+  Perform the behaviour UNDER TEST as the role the case specifies — e.g. a "Viewer cannot
+  delete" case still attempts the delete **as Viewer**; only the setup is done as Admin.
+- **Assume input VALUES:** for any unspecified free-input field (mobile number, email,
+  name, address, description…), generate a realistic SYNTHETIC value — never block for want
+  of an input value. Tag created data `QA_<runid>_`; no real PII; use safe test ranges
+  (reserved test phone numbers / test email domains).
+- **References must exist:** for a field that must reference an EXISTING entity/option
+  (a group, a region, a parent record), do NOT invent a value that may not exist — create
+  the entity first (via Admin) or use a fixture, then reference it.
+- **Prefer the API** for setup when available/faster; otherwise the UI. A named fixture is
+  still preferred for expensive/irreversible state; if none exists, build it via Admin.
+- **BLOCKED is a last resort** — only when even Admin cannot create the state: it needs an
+  external system, a capability no role has, or a genuinely irreversible real-world action
+  (e.g. a real payment, a real message to a real person). Flag `needs-live-action` cases for
+  confirmation; everything else, build it.
+- Provisioning sets up state; it must NOT fabricate the RESULT under test — the expected
+  result still comes from the SRS / a `DEC-###`. (Assume input *values*, never expected
+  *outcomes*.)
+- Boundaries: only on the environment in `context.md` (never production); tag everything and
+  record residue (and anything not cleanly removable) in the run report.
 
 ## Data & Safety
 - Use only designated test accounts / data. No real PII.

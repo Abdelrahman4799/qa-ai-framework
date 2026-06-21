@@ -27,25 +27,23 @@ description: Execute a use case's test cases (plus its regression set) against t
    - ORDER by dependency: from the `Depends on` column, run a use case's
      prerequisite cases BEFORE it (or establish the prerequisite end-state as the
      precondition). Stop following a chain at a `TBD`/circular edge and report it.
-   - FIXTURES: for any case tagged `needs-fixture: <name>`, confirm that fixture
-     exists and is in the expected state (per `docs/ai/test-fixtures.md`). If it is
-     missing, mark the case **BLOCKED — "seed fixture `<name>`"**. Do NOT build deep /
-     irreversible prerequisite state live unless the user explicitly authorizes it for
-     this run.
+   - FIXTURES: for any case tagged `needs-fixture: <name>`, use the fixture if it exists.
+     If it is missing, BUILD the needed state via Admin (standing authorization) rather
+     than blocking; only mark BLOCKED if even Admin can't create it.
    - Create a run folder: `.qa-state/runs/<runid>/`.
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
-   - PROVISION by precondition-feasibility (don't just block):
-       · `self-serviceable` → CREATE the data before testing — run the prerequisite
-         use case's create flow (from `Depends on`) with an allowed role, or create the
-         minimal data via the app UI or, when faster/available, the documented API.
-         SYNTHETIC, tagged `QA_<runid>_` (plain alphanumeric where special chars are
-         rejected). No real PII. Then proceed.
-       · `needs-fixture` / `needs-config` / `needs-live-action` → do NOT build deep or
-         irreversible state live. Require the named fixture (checked at pre-flight); if
-         absent, BLOCKED with the fixture/capability name, unless the user authorizes
-         building it for this run.
-     Record what you created. See "Test Data Provisioning" in execution-policy.md.
+   - PROVISION to clear blocks (standing authorization — create what's needed):
+       · Use ADMIN to create/configure prerequisite data & state (prefer the API when
+         faster, else the UI). For references that must pre-exist, create the entity via
+         Admin or use a fixture.
+       · ASSUME realistic synthetic values for any unspecified input (mobile, email,
+         name…), tagged `QA_<runid>_` (plain alphanumeric where special chars are
+         rejected). No real PII.
+       · Perform the behaviour UNDER TEST as the case's role — not Admin.
+       · BLOCKED only if even Admin can't create it (external system / missing capability /
+         irreversible real-world action — `needs-live-action`; flag for confirmation).
+     Record what you created (residue). See "Test Data Provisioning" in execution-policy.md.
    - Execute steps exactly as written, one action per step.
    - For each asserting step: capture a screenshot + observed result;
      mark PASS / FAIL / BLOCKED / INCONCLUSIVE.

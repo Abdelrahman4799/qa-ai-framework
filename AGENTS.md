@@ -84,6 +84,12 @@ Use only the relevant skill:
 - Do not modify the application, its data, or environment beyond what a test step
   requires. Prefer read-only / reversible actions.
 - Never use real PII or production credentials. Test data and test accounts only.
+- **Create the data a case needs rather than blocking:** provision/control via the
+  **Admin** account, assume synthetic values for unspecified inputs (mobile, email…),
+  and create/reference real entities for fields that must pre-exist. Perform the
+  behaviour under test as the case's role. BLOCKED only when even Admin can't (external
+  system / missing capability / irreversible real-world action). Never fabricate the
+  expected *result* — only input *values*.
 - Capture evidence (screenshot + observed result) for every step that asserts
   behavior.
 - Do not upload anything to DevOps until results pass the review gate.

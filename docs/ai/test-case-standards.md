@@ -16,9 +16,11 @@
 - Precondition-feasibility tag: `self-serviceable` | `needs-fixture: <name>` |
   `needs-config` | `needs-live-action` (see generate-test-cases + `test-fixtures.md`)
 - **Test Data Preparation** — the explicit build / navigation path to reach the
-  precondition state (cite `app-map.md` routes and `test-fixtures.md` fixtures).
-  Use real, reachable values — **no hardcoded or invented dummy data** (e.g. not
-  "North"); reference a fixture or a value the steps actually create. No real PII.
+  precondition (cite `app-map.md` routes; fixtures; or setup created via Admin).
+  For **free-input fields** (mobile, email, name, address…), assume realistic SYNTHETIC
+  values tagged `QA_<runid>_`. For fields that must reference an **existing entity/option**,
+  create it (via Admin) or use a fixture — never reference a value that must pre-exist
+  without ensuring it exists. No real PII.
 - Steps (numbered, one UI-observable action each, executable by Playwright MCP)
 - Expected result (taken from the SRS / new-feature SRS / a `DEC-###` — cite the source)
 

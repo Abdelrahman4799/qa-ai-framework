@@ -14,6 +14,10 @@ Confirm exact permissions per role with the team (`TBD`); do not assume.
 
 The rows below are seed defaults — `index-srs` will reconcile them with the SRS.
 
+**Admin is the default provisioning / control account.** Create, configure, and clean up
+system state and prerequisite data via Admin (it can control anything in the system).
+Execute the behaviour under test as the case's role — use Admin only for setup/control.
+
 | Role | Account (.env keys) | Permissions / scope | Notes |
 |------|-------------------|---------------------|-------|
 | Admin | `$env:QA_ADMIN_USER` / `$env:QA_ADMIN_PASS` | full access (`TBD - confirm`) | |
