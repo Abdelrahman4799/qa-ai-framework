@@ -31,9 +31,9 @@ flowchart TD
     IDX --> S2["2 · generate-test-cases<br/>SELECT UC · discover + CONFIRM<br/>walk coverage dimensions · cases + regression"]
     DEC[("decisions.md DEC-###<br/>coverage-dimensions · fixtures · app-map")] -.-> S2
     S2 -.->|"/goal loop ≤3<br/>maximise coverage"| S2
-    S2 --> TC[("test-cases/UC-xx/<br/>traceability.md<br/>coverage.md")]
+    S2 --> TC[("test-cases/UC-xx/*.csv<br/>traceability.md<br/>coverage.md")]
 
-    TC --> S3["3 · execute-test-cases<br/>Playwright MCP · auto-provision data<br/>PASS / FAIL / BLOCKED / FLAKY"]
+    TC --> S3["3 · execute-test-cases<br/>Playwright MCP · parallel runners · Admin provisions (API seed)<br/>PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY"]
     S3 -.->|"/goal loop ≤3<br/>definitive results"| S3
     S3 --> RUN[(".qa-state/runs/id/<br/>screenshots + RUN-REPORT.md")]
 

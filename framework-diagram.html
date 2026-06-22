@@ -93,8 +93,8 @@
     <rect class="stage" x="320" y="368" width="300" height="74" rx="10"/>
     <text class="num" x="338" y="394">3</text>
     <text class="staget" x="470" y="394" text-anchor="middle">execute-test-cases</text>
-    <text class="lbl small" x="470" y="412" text-anchor="middle">Playwright MCP · auto-provision data</text>
-    <text class="lbl small" x="470" y="428" text-anchor="middle">PASS / FAIL / BLOCKED / FLAKY</text>
+    <text class="lbl small" x="470" y="412" text-anchor="middle">Playwright MCP · parallel runners · Admin provisions</text>
+    <text class="lbl small" x="470" y="428" text-anchor="middle">PASS / FAIL / BLOCKED / INCONCLUSIVE / FLAKY</text>
 
     <!-- /goal self-loops on generate (2) and execute (3) -->
     <path class="loop" d="M320,272 C258,264 258,308 320,308" marker-end="url(#arrowL)"/>
@@ -127,7 +127,7 @@
     <text class="storet small" x="930" y="186" text-anchor="middle">+ _fingerprint.json (stale-index check)</text>
 
     <rect class="store" x="720" y="259" width="420" height="60" rx="10"/>
-    <text class="storet" x="930" y="283" text-anchor="middle">test-cases/UC-xx/</text>
+    <text class="storet" x="930" y="283" text-anchor="middle">test-cases/UC-xx/*.csv</text>
     <text class="storet small" x="930" y="303" text-anchor="middle">traceability.md · coverage.md</text>
 
     <rect class="store" x="720" y="375" width="420" height="60" rx="10"/>
@@ -248,7 +248,8 @@
     <li><b>Top diagram = the pipeline.</b> A single chosen use case flows top-to-bottom: index once → generate → execute in a real browser → triage failures → <b>review gate</b> → upload to Azure DevOps.</li>
     <li><b>Right column = what persists</b> between sessions. Downstream stages read these, not the SRS.</li>
     <li><b>Violet self-loops = the <code>/goal</code> loop.</b> Generate iterates (≤3 rounds) to maximise coverage; execute iterates (≤3 rounds) to drive every case to a definitive PASS/FAIL. Each stops early when a round makes no progress.</li>
-    <li><b>Auto-provisioning:</b> if a use case is blocked by missing data/prerequisites, execute <i>creates</i> it (synthetic, tagged, test-env only) and retries — BLOCKED is a last resort.</li>
+    <li><b>Provisioning:</b> missing data/state is <i>created via the Admin account</i> — exploring and using the app's API to seed quickly; input values (mobile, email…) are assumed synthetic + tagged (test-env only). The behaviour under test still runs as the case's role. BLOCKED only when even Admin can't.</li>
+    <li><b>Fast &amp; portable:</b> optional parallel runners (isolated by browser context, not account) speed execution; generated cases are saved as <code>CSV</code>.</li>
     <li><b>Coverage dimensions:</b> generation walks a checklist per UC (functional, negative, boundary, RBAC, integration, concurrency, list-ops, soft-delete, audit, localization/RTL, theme, a11y) and records Covered / N-A / Gap; the coverage report shows a per-UC × per-dimension matrix so skips are visible, not silent.</li>
     <li><b>Sources of truth:</b> the SRS, plus <code>decisions.md</code> (DEC-### rulings not in the SRS) and <code>test-fixtures.md</code> / <code>app-map.md</code> feed generation; cases trace to UC + REQ + DEC.</li>
     <li><b>Amber path</b> is gated: nothing reaches Azure DevOps until the review gate writes <code>review-passed.json</code>.</li>

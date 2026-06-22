@@ -55,6 +55,11 @@ Standing authorization: **create the data and state a case needs rather than blo
   the entity first (via Admin) or use a fixture, then reference it.
 - **Prefer the API** for setup when available/faster; otherwise the UI. A named fixture is
   still preferred for expensive/irreversible state; if none exists, build it via Admin.
+- **Explore the API to seed:** when the UI is slow or no API is obvious, DISCOVER endpoints —
+  an OpenAPI/Swagger spec, the browser network calls made during the equivalent UI action,
+  or observed requests — then call them (reusing the logged-in Admin session's auth/token,
+  never a hardcoded one) to seed data fast. Record reusable endpoints in `app-map.md` so
+  future runs don't re-discover them.
 - **BLOCKED is a last resort** — only when even Admin cannot create the state: it needs an
   external system, a capability no role has, or a genuinely irreversible real-world action
   (e.g. a real payment, a real message to a real person). Flag `needs-live-action` cases for

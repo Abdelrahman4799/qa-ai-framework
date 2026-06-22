@@ -27,6 +27,16 @@ Fill from your app so execution can navigate without guessing.
 Record per-screen quirks that affect testing: button order, what a disabled control
 means, required fields, server validation codes, etc. `TBD`
 
+## API endpoints (for data seeding)
+Endpoints discovered for seeding/setup — from an OpenAPI/Swagger spec, the browser network
+tab during the equivalent UI action, or observed requests. Reuse these to seed data fast
+(via the Admin session's auth) instead of clicking through the UI. Record them as you find
+them. No tokens/secrets in this file. `TBD`
+
+| Purpose (what it creates/sets up) | Method + path | Auth | Payload notes |
+|-----------------------------------|---------------|------|---------------|
+| `TBD`                             | `TBD`         | `TBD`| `TBD`         |
+
 ## Known UI gotchas (common — confirm which apply to your app)
 These are frequently true of web apps. Verify each against your app and keep the ones
 that apply (delete the rest):
