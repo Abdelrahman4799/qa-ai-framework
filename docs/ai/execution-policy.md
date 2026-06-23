@@ -70,6 +70,16 @@ Standing authorization: **create the data and state a case needs rather than blo
 - Boundaries: only on the environment in `context.md` (never production); tag everything and
   record residue (and anything not cleanly removable) in the run report.
 
+## Fresh data per run
+- Each run creates its OWN fresh data, tagged with a **unique run id**: `QA_<runid>_…`.
+  The `runid` must be unique per run (e.g. a date-time stamp), so created values never
+  collide with earlier runs — important for unique fields (names, emails, codes).
+- **Never reuse or depend on data from a PREVIOUS run** — it may be gone or changed. Don't
+  assume "the record I made last time" exists; create what this run needs.
+- **Exception — fixtures:** named fixtures (`test-fixtures.md`) are intentionally persistent
+  shared seed states; they are NOT regenerated each run — reuse them as-is.
+- Clean up this run's created data when feasible; record residue.
+
 ## Data & Safety
 - Use only designated test accounts / data. No real PII.
 - **Create your own disposable test data; never edit or delete records you did not

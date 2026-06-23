@@ -31,7 +31,9 @@ description: Execute a use case's test cases (plus its regression set) against t
    - FIXTURES: for any case tagged `needs-fixture: <name>`, use the fixture if it exists.
      If it is missing, BUILD the needed state via Admin (standing authorization) rather
      than blocking; only mark BLOCKED if even Admin can't create it.
-   - Create a run folder: `.qa-state/runs/<runid>/`.
+   - Create a run folder: `.qa-state/runs/<runid>/`. Use a UNIQUE runid (date-time stamp)
+     and create FRESH data this run, tagged `QA_<runid>_` — never reuse or depend on data
+     from a previous run (fixtures are the persistent exception). See "Fresh data per run".
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
    - PROVISION to clear blocks (standing authorization — create what's needed):

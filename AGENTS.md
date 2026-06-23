@@ -93,6 +93,9 @@ Use only the relevant skill:
   expected *result* — only input *values*.
 - Capture evidence (screenshot + observed result) for every step that asserts
   behavior.
+- **Fresh data every run:** create this run's own data with a unique per-run tag
+  (`QA_<runid>_`); never reuse or depend on data from a previous run. Fixtures are the
+  deliberate persistent exception.
 - Do not upload anything to DevOps until results pass the review gate.
 - Never expose the DevOps PAT, secrets, or credentials in output, logs, or work items.
 
