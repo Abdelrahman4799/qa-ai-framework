@@ -29,6 +29,7 @@ Read extra docs only when relevant:
 - Rulings not in the SRS (BA Q&A) → `docs/ai/decisions.md`
 - Deep / compound prerequisite states → `docs/ai/test-fixtures.md`
 - App navigation / known UI behavior → `docs/ai/app-map.md`
+- API endpoints (seeding / checks) → `docs/ai/api-map.md`
 - Logging a bug → `docs/ai/defect-policy.md`
 - Uploading to Azure DevOps → `docs/ai/devops-policy.md`
 - Unclear domain terms → `docs/ai/glossary.md`
@@ -44,6 +45,7 @@ Use only the relevant skill:
 - Guided onboarding (fill the config TBDs one by one) → `.claude/skills/setup-wizard/SKILL.md`
 - Health-check the framework setup → `.claude/skills/doctor/SKILL.md`
 - Ingest a Word (.docx) SRS → split into per-use-case files → `.claude/skills/ingest-srs/SKILL.md`
+- Discover & catalog the app's API → `.claude/skills/map-api/SKILL.md`
 - Build the use-case index (once per baseline) → `.claude/skills/index-srs/SKILL.md`
 - Generate test cases for a chosen use case → `.claude/skills/generate-test-cases/SKILL.md`
 - Execute test cases in the app → `.claude/skills/execute-test-cases/SKILL.md`

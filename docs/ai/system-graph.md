@@ -44,7 +44,7 @@ Order : Draft -> Submitted -> Approved -> Closed    [✓]
 ```
 UC-05 --route--> /checkout       [✓]
 ```
-### API (entity → seeding endpoint)  (from app-map)
+### API (entity → seeding endpoint)  (from api-map)
 ```
 Order --api--> POST /api/orders  [?]
 ```

@@ -22,6 +22,7 @@ setup is incomplete and offers the wizard. **Approve the project hooks** when pr
 |---|---|---|
 | Word SRS → Markdown | drop `.docx` in `docs/ai/srs/_inbox/`, then **"Ingest the SRS"** (`/ingest-srs`) | pandoc converts + splits into per-use-case files (add `-UseCaseLevel N` if not `####`) |
 | Build the model | **"Run index-srs"** (`/index-srs`) | Builds the **use-case catalog** (actors, depends-on, related), **permission matrix**, **system graph**, and the stale-index fingerprint |
+| Catalog the API | **"Map the API"** (`/map-api`) | Discovers endpoints (Swagger/observed) into `docs/ai/api-map.md` — reused anytime for seeding |
 
 ## 3. Per use case — the core loop
 Simplest end to end:

@@ -81,9 +81,10 @@ Invoke any of these in natural language (e.g. "run doctor", "ingest the SRS").
 - `setup-wizard` — guided onboarding; fills config `TBD`s one at a time and updates the files
 - `doctor` — setup health check (tooling, PAT, role accounts, config TBDs, index freshness, hooks)
 
-**Requirements intake**
+**Requirements & app intake**
 - `ingest-srs` — convert a Word `.docx` SRS with pandoc and split it into per-use-case files
-- `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + fingerprint
+- `index-srs` — build the use-case catalog (actors, depends-on, related) + permission matrix + system graph + fingerprint
+- `map-api` — discover & catalog the app's API endpoints into `api-map.md` (for seeding / checks)
 
 **Test pipeline**
 - `generate-test-cases` — for one chosen use case: understand it + related UCs deeply, cover every SRS statement and dimension using formal test-design techniques (equivalence/boundary/decision-table/state/pairwise) with concrete values + precise oracles, role-based + dependency-aware, link to baseline cases, adversarial `/goal` loop; saved as **CSV** (one row per case)
@@ -125,13 +126,13 @@ See `.claude/skills/self-heal/SKILL.md`.
 ```
 docs/ai/         context · handoff · policies (test-case-standards, execution,
                  defect, devops, test-data) · coverage-dimensions · test-design-techniques ·
-                 decisions · test-fixtures · app-map · permission-matrix · system-graph · glossary
+                 decisions · test-fixtures · app-map · api-map · permission-matrix · system-graph · glossary
                  + srs/ (baseline) and new-feature-srs/ (your documents)
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)
 .qa-state/       runtime: run evidence + the review gate marker (git-ignored)
-.claude/skills/  setup-wizard, doctor, ingest/index, generate/execute/exploratory,
-                 triage, review, upload, coverage, self-heal, save-session (13)
+.claude/skills/  setup-wizard, doctor, ingest/index/map-api, generate/execute/exploratory,
+                 triage, review, upload, coverage, self-heal, save-session (14)
 .claude/         hooks (6) + settings
 scripts/         ingest_srs.ps1, doctor.ps1, set_env.ps1, load_env.ps1
 ```

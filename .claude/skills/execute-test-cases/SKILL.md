@@ -39,10 +39,10 @@ description: Execute a use case's test cases (plus its regression set) against t
    - PROVISION to clear blocks (standing authorization — create what's needed):
        · Use ADMIN to create/configure prerequisite data & state. SEED VIA THE API BY
          DEFAULT — for all the data a case needs, when a usable endpoint exists; discover
-         endpoints if needed (Swagger/OpenAPI, browser network calls, observed requests),
-         reuse the Admin session's auth, and record reusable ones in `app-map.md`. Fall
-         back to the UI only when there's no usable API. For references that must
-         pre-exist, create the entity via Admin or use a fixture.
+         endpoints from `docs/ai/api-map.md`; if one is missing, discover it (run map-api
+         or observe the network calls), seed with it, and add it to `api-map.md`. Reuse the
+         Admin session's auth. Fall back to the UI only when there's no usable API. For
+         references that must pre-exist, create the entity via Admin or use a fixture.
        · ASSUME realistic synthetic values for any unspecified input (mobile, email,
          name…), tagged `QA_<runid>_` (plain alphanumeric where special chars are
          rejected). No real PII.
