@@ -52,6 +52,9 @@ description: Execute a use case's test cases (plus its regression set) against t
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
    - PROVISION to clear blocks (standing authorization — create what's needed):
+       · REUSE FIRST: check the data manifest (step 1b) and existing tagged data; only
+         create what is still missing or was discovered at runtime — don't re-create what
+         pre-prep already made.
        · Use ADMIN to create/configure prerequisite data & state. SEED VIA THE API BY
          DEFAULT — for all the data a case needs, when a usable endpoint exists; discover
          endpoints from `docs/ai/api-map.md`; if one is missing, discover it (run map-api
