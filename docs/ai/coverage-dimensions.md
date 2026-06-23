@@ -27,7 +27,16 @@ skipped. Not every dimension applies to every UC — for each, record
 6. **Concurrency / multi-session** — two users/sessions acting at once: record
    pick-lock, first-wins, concurrent create/edit of the same record. See
    `execution-policy.md` → Multi-session.
-7. **List operations** — search, sort, filter, reset, pagination, empty-state.
+7. **Search / sort / filter / pagination** — for any list or grid:
+   · **Search:** exact · partial · no-match (empty state) · case-insensitive · diacritics /
+     accents · Arabic vs Latin script · special characters · leading/trailing spaces · very
+     long query · (injection-ish input rejected safely).
+   · **Sort:** each sortable column ascending + descending · locale-aware order (e.g. Arabic) ·
+     numbers sorted numerically (not as text) · nulls/blanks placement · stable/secondary sort.
+   · **Filter:** single filter · combined filters · clear / reset · no-results state · filter
+     persists across pagination and navigation.
+   · **Pagination:** page size, next / prev / first / last, and the result **count stays
+     accurate** after a search or filter.
 8. **Soft-delete & confirmation** — delete asks for confirmation; soft-deleted items
    behave per the SRS (hidden / restorable).
 9. **Audit log** — actions that should be recorded are captured (who / what / when),
