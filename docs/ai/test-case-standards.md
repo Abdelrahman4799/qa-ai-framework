@@ -12,7 +12,8 @@
 - Priority (P1 critical … P3 low)
 - Type (positive / negative / boundary / permission / regression) + the **coverage
   dimension(s)** it targets (see `coverage-dimensions.md`)
-- Preconditions (state, role, data needed)
+- Preconditions (state, role, data needed) — **always include the entity/record STATUS**
+  when the entity has states (e.g. "request status = Draft"); plus role and entity id.
 - Precondition-feasibility tag: `self-serviceable` | `needs-fixture: <name>` |
   `needs-config` | `needs-live-action` (see generate-test-cases + `test-fixtures.md`)
 - **Test Data Preparation** — the explicit build / navigation path to reach the
@@ -21,8 +22,11 @@
   values tagged `QA_<runid>_`. For fields that must reference an **existing entity/option**,
   create it (via Admin) or use a fixture — never reference a value that must pre-exist
   without ensuring it exists. No real PII.
-- Steps (numbered, one UI-observable action each, executable by Playwright MCP)
-- Expected result (taken from the SRS / new-feature SRS / a `DEC-###` — cite the source)
+- Steps (numbered, one UI-observable action each, executable by Playwright MCP), with a
+  **per-step expected result**
+- Expected result (taken from the SRS / new-feature SRS / a `DEC-###` — cite the source).
+  When verifying a message/label, **quote the EXACT UI text** (per supported language,
+  e.g. AR + EN) — not a paraphrase.
 
 ## Block Template
 ```markdown
@@ -39,21 +43,28 @@
 - Source: new-feature-srs/<file>.md ## <section>  (or srs/<file>.md, or DEC-###)
 ```
 
-## CSV Output (the saved format)
-Generated cases are saved as **CSV — one row per test case** — at
-`test-cases/<UC-ID>/<UC-ID>.csv` (UTF-8, RFC 4180).
+## CSV Output (step-per-row — the saved format)
+Generated cases are saved as **CSV, one row per STEP** — at `test-cases/<UC-ID>/<UC-ID>.csv`
+(UTF-8 no BOM, RFC 4180). Step-per-row enables **step-level execution tracking** (the
+executor records which step failed, not just the case).
 
 Header (exact column order):
 ```
-TC ID,Title,UC,REQ,DEC,Priority,Type,Dimension,Feasibility,Preconditions,Test Data Preparation,Steps,Expected Result,Related Baseline TCs,Source
+TC ID,Title,Trace,Priority,Type,Dimension,Feasibility,Preconditions,Test Data Preparation,Step ID,Step #,Step Action,Expected Result,Actual Result,Step Status,Failure Notes,Overall TC Status
 ```
+Layout:
+- **Metadata** columns (`TC ID` … `Test Data Preparation`) appear ONLY on a case's FIRST
+  step row; blank on its subsequent step rows.
+- **Step** columns (`Step ID`, `Step #`, `Step Action`, `Expected Result`) on EVERY row —
+  one action per row. `Step ID` = `{TC_ID}_S{NN}` (zero-padded, e.g. `TC-UC05-001_S01`).
+- **Execution** columns (`Actual Result`, `Step Status`, `Failure Notes`, `Overall TC
+  Status`) are left BLANK — the executor fills them per step (Overall on the first row only).
 Rules:
-- Quote any field containing a comma, double-quote, or newline; escape an internal `"`
-  by doubling it (`""`). Always include the header row. UTF-8 (no BOM).
-- `Steps`: numbered, one per line inside the quoted cell, as `1. <action> => <expected>`.
-- Leave optional fields blank when empty (e.g. no `DEC`).
-- One CSV per use case. For an Azure DevOps Excel/grid import you can also produce a
-  step-per-row variant (see `devops-policy.md`); the REST upload path doesn't need CSV.
+- `Trace` = `UC-### · REQ-### · DEC-###` (as applicable). RFC 4180 quoting; header row always.
+- Each step's `Expected Result` is specific to THAT action (the per-step oracle) and quotes
+  the exact UI text when verifying a message.
+- One CSV per use case. (For an Azure DevOps Excel/grid import the same shape works; the
+  REST upload path doesn't need CSV.)
 
 ## Step-Writing Rules
 - One action per step ("Click Login", "Enter <email> in the Email field").

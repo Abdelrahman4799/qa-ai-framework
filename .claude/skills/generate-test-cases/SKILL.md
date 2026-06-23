@@ -60,6 +60,17 @@ Never generate for the whole SRS.
      ordering/prerequisite effects (`Depends on`), and what the chosen UC's changes do
      downstream (reverse edges). This is what cross-feature/integration cases test.
 
+6b. TESTABILITY GAP CHECK (before writing any case)
+   - Verify the inputs are testable; for the chosen UC check:
+     · each field has type · mandatory? · length/range · format/validation rules
+     · each step/flow has an expected result
+     · each business rule has a measurable, testable criterion
+     · success / error / confirmation MESSAGES and labels exist (per language)
+     · dropdown / option / enum lists are enumerated
+   - For each gap: ask the user a TARGETED question and/or record the answer in
+     `docs/ai/decisions.md` (`DEC-###`); mark unresolved ones `TBD`. Do NOT write vague
+     cases on missing info — get the value or flag it.
+
 7. GENERATE
    - TECHNIQUES (this is what makes coverage strong, not shallow): for each requirement /
      input / rule, apply the right test-design technique from
@@ -74,6 +85,11 @@ Never generate for the whole SRS.
      message, state, or persisted value) — never "it works".
    - SCENARIOS: cover the MAIN flow, EVERY alternate flow, and EVERY exception/error
      path identified in steps 2 & 6 — not just happy/negative/boundary.
+   - PER-ACTION: for each action, cover the verification checklist in
+     `coverage-dimensions.md` (confirmation dialog → exact message → status transition →
+     audit-log entry → page redirection). Expected results QUOTE the exact UI text (per
+     language) when checking a message — never paraphrase.
+   - Write each step with its OWN expected result (per-step oracle) — the CSV is step-per-row.
    - NEGATIVE (where applicable): for inputs, actions, and rules that can fail, generate
      the negative/invalid counterpart too — see the negative checklist in
      `coverage-dimensions.md` (missing/empty/null, wrong type/format, out of range,
@@ -145,8 +161,10 @@ Never generate for the whole SRS.
      Carried into Azure DevOps by upload-to-devops.
 
 9. WRITE
-   - Save cases as **CSV, one row per case**, at `test-cases/<UC-ID>/<UC-ID>.csv`
-     using the CSV schema + escaping rules in `test-case-standards.md`.
+   - Save cases as **step-per-row CSV** at `test-cases/<UC-ID>/<UC-ID>.csv` using the
+     schema in `test-case-standards.md` (one row per step; metadata on the first step row;
+     `Actual Result` / `Step Status` / `Failure Notes` / `Overall TC Status` left BLANK
+     for the executor).
    - Update `test-cases/traceability.md` (UC/REQ/DEC → TC, + Related baseline TCs for
      the new-feature UC).
 

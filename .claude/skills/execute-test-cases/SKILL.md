@@ -71,9 +71,12 @@ description: Execute a use case's test cases (plus its regression set) against t
      · evidence missing → recapture; transient/timing → apply the one controlled retry;
      · cases that became runnable after provisioning → run them now.
    - Stop when all are definitive or no further progress; report what remains and why.
-4. Record results
-   - Write a result record per case into the run folder
-     (TC ID, status, evidence paths, notes).
+4. Record results — STEP LEVEL
+   - The test cases are step-per-row CSV. Per STEP, fill the execution columns:
+     `Actual Result`, `Step Status` (PASS/FAIL/BLOCKED/INCONCLUSIVE), `Failure Notes`
+     (reason if not PASS), with evidence path; set `Overall TC Status` on the case's first
+     row. Save the executed copy under `.qa-state/runs/<runid>/`.
+   - This pinpoints WHICH step failed, not just the case.
 5. Summarize + write the run report
    - Totals (pass / fail / blocked / inconclusive / flaky), the list of FAILs
      (→ triage-defect), INCONCLUSIVE + FLAKY cases (human attention), BLOCKED reasons.

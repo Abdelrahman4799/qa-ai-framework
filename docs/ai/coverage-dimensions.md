@@ -40,6 +40,22 @@ skipped. Not every dimension applies to every UC — for each, record
 11. **Theme** — dark / light (and high-contrast if present); layout intact in each.
 12. **Accessibility (basic)** — keyboard navigation, labels, colour contrast.
 
+## Behavioral & resilience (where applicable)
+13. **Delegation / on-behalf-of** — if a user can act as a proxy for another role, test the
+    delegated action works and the **audit log records "on behalf of"** the principal.
+14. **Navigation & unsaved state** — cancel/discard, navigate-away with an **unsaved-changes
+    warning**, submit/save with no changes, browser back, close tab, session timeout.
+15. **Page redirection** — verify **where the user lands** after each action (save / submit /
+    cancel / delete).
+16. **Data persistence** — data survives a language switch, theme change, preview-and-return,
+    a validation error, and uploaded files are kept before final save.
+17. **Error recovery** — network / server / upload failure mid-action, and retry afterwards.
+
+## Per-action verification checklist
+For each action a use case offers (save, submit, approve, delete…), verify all that apply:
+confirmation dialog → **exact** success/error message (per language) → status transition →
+**audit-log entry** → **page redirection**. These are the items most often skipped.
+
 ## How to use
 - `generate-test-cases` walks this list for each UC and records, per dimension,
   Covered / N/A+reason / Gap.

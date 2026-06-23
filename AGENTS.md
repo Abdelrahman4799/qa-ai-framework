@@ -69,6 +69,11 @@ Use only the relevant skill:
   applicable coverage dimension (`coverage-dimensions.md`). Never stop at the happy path.
 - **Cover every SRS statement:** treat each sentence/clause in the UC section as a
   testable item — map it to a case or mark it explicitly N/A. Ignore nothing.
+- **Check testability before generating:** confirm fields have type/mandatory/length/
+  validation, steps have expected results, rules are testable, and messages/options exist
+  — ask or log to `decisions.md`; never write vague cases on missing info. Expected results
+  **quote the exact UI message text** (per language); per action verify dialog / message /
+  status / audit entry / redirection.
 - **Design strong cases, not shallow ones:** apply test-design techniques
   (`test-design-techniques.md`) — equivalence partitioning, boundary analysis, decision
   tables, state-transition, pairwise — with concrete values and a precise expected
