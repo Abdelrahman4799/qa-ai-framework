@@ -77,6 +77,10 @@ Use only the relevant skill:
   critiques adversarially; never declare strong coverage you didn't actually reach.
 - **Link new-feature ↔ baseline:** always link a new-feature use case to its related /
   likely-impacted baseline test cases (persist in traceability; carried into DevOps).
+- **Impact-based regression:** for each impacted related UC (found via the system graph —
+  reverse deps, shared entity/state/permission, 1–2 hops), name the impact point and
+  design a TARGETED regression case there, plus re-run its core flow. A bare happy-path
+  re-run is not sufficient regression.
 - **Test data prep may use the API** when it is faster/available; the behavior under
   test is still exercised through the UI unless the case is itself an API test.
 - **Parallel execution:** ask the user how many runners to use; only parallelise

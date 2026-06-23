@@ -24,9 +24,13 @@ Turn traceability into a human-readable coverage view: what is covered, what is 
 4. Build the **dimension matrix**: per UC × each dimension in `coverage-dimensions.md`,
    mark Covered / N/A (reason) / Gap — so skipped dimensions (e.g. no localization or
    concurrency cases) are visible, not silent.
-5. Write `test-cases/coverage.md` (requirement table + dimension matrix + gap summary +
-   scope + last-updated date).
-6. Report the coverage figure (covered / total), the dimension gaps, and the list of gaps.
+5. Regression coverage (for a new-feature UC): list each impacted related UC and whether
+   it has (a) a core re-run AND (b) a targeted impact-point regression case. Flag any
+   impacted UC with only a re-run, or with none.
+6. Write `test-cases/coverage.md` (requirement table + dimension matrix + regression table
+   + gap summary + scope + last-updated date).
+7. Report the coverage figure (covered / total), the dimension gaps, the regression gaps,
+   and the list of gaps.
 
 ## Rules
 - Do not invent UCs/REQs/DECs — only those present in the indexes/decisions.

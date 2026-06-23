@@ -124,17 +124,25 @@ Never generate for the whole SRS.
      For data-scoped rules (e.g. "Manager — own team only"), add a positive case
      in-scope and a negative case out-of-scope where the matrix flags it.
 
-8. SELECT & LINK the related baseline test cases
-   - From `test-cases/traceability.md`, collect existing baseline SRS test cases that
-     cover the related UCs AND the impact set (UCs that depend on the chosen one —
-     reverse edges) — i.e. the regression / likely-impacted set. Where such a UC has no
-     cases yet, generate them too.
-   - ALWAYS LINK: record the link from the chosen new-feature UC to those related
-     baseline TC IDs, and persist it:
-       · `test-cases/traceability.md` → the new-feature UC's "Related baseline TCs" column
-       · `docs/ai/new-feature-srs/_index.md` → note the related TC IDs alongside the
-         "Relates to existing" UCs
-     This link is carried into Azure DevOps by upload-to-devops.
+8. REGRESSION & IMPACT (related UCs) — design, don't just re-run
+   - Build the IMPACTED SET by traversing `system-graph.md` from the chosen UC: reverse
+     depends-on (UCs that depend on it), shared-ENTITY writes, shared state / route /
+     config / permission, plus 1–2 hops of transitive impact (bounded; confirm wider scope).
+   - For EACH impacted UC, do IMPACT ANALYSIS — name WHAT the new feature changes that this
+     UC touches: a shared entity/field, a new/changed state, a flow step, a permission, or
+     shared config. That's the impact point.
+   - Cover each impacted UC TWO ways:
+       · RE-RUN its existing baseline TCs for the core flows (from traceability) to confirm
+         they still pass — generate them if missing; and
+       · DESIGN NEW targeted regression cases AT THE IMPACT POINT — the interaction between
+         the new feature and that UC (e.g. the related UC behaves correctly with data the
+         new feature created, a state it set, or a permission it changed). A bare re-run of
+         the happy path is NOT sufficient regression.
+   - Prioritise by risk: shared writes, state changes, and permission changes first.
+   - ALWAYS LINK & persist the new-feature UC → related baseline TC IDs:
+       · `test-cases/traceability.md` → "Related baseline TCs" column
+       · `docs/ai/new-feature-srs/_index.md` → alongside "Relates to existing"
+     Carried into Azure DevOps by upload-to-devops.
 
 9. WRITE
    - Save cases as **CSV, one row per case**, at `test-cases/<UC-ID>/<UC-ID>.csv`
@@ -157,6 +165,8 @@ Never generate for the whole SRS.
          rules, and states, and check each has a case. Flag: missing classes/boundaries/
          rules/states, **any applicable positive case lacking its negative counterpart**,
          vague steps, and weak/imprecise expected results ("works", "no error").
+         For EACH impacted related UC, check it has BOTH a core re-run AND a targeted
+         regression case at the impact point — flag any impacted UC with only a re-run.
       2. Add or STRENGTHEN cases to close each gap — concrete values, precise oracles;
          re-save and update traceability.
       3. Re-check. Stop only when the critique finds nothing, or after 3 rounds (report
