@@ -146,12 +146,16 @@ Standing authorization: **create the data and state a case needs rather than blo
 - Group cases by role where possible to minimise re-logins.
 
 ## Multi-session / concurrency
-- For concurrency cases (pick-lock, first-wins, concurrent create/edit of the same
-  record), run a **second independent session** alongside the first — e.g. a separate
-  browser profile / incognito / second Playwright context — each logged in as its own
-  account.
-- Drive the two sessions in the required order and assert the contended outcome from
-  the persisted state (reload first). Use distinct, self-created data; clean up after.
+- SUPPORTED for concurrency cases (pick-lock, first-wins, concurrent create/edit of the
+  same record). Run a **second independent session** alongside the first, isolated by its
+  own **browser context/profile** (or a second Playwright MCP instance) — NOT necessarily a
+  second account: use the same user in two sessions, or two different users, as the test
+  requires. Tabs in one context share auth, so they won't work for this.
+- Drive the sessions in the required ORDER (session A acts → session B acts → assert) and
+  read the contended outcome from the persisted state (reload first). A single agent
+  interleaves the two sessions in a controlled sequence — fine for orchestrated
+  concurrency; true millisecond-level races need genuine parallel workers.
+- Use distinct, self-created data; clean up after.
 
 ## Evidence Storage
 - All run artifacts under `.qa-state/runs/<runid>/` (screenshots + result log).
