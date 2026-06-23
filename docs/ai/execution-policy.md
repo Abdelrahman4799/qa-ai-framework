@@ -53,8 +53,11 @@ Standing authorization: **create the data and state a case needs rather than blo
 - **References must exist:** for a field that must reference an EXISTING entity/option
   (a group, a region, a parent record), do NOT invent a value that may not exist — create
   the entity first (via Admin) or use a fixture, then reference it.
-- **Prefer the API** for setup when available/faster; otherwise the UI. A named fixture is
-  still preferred for expensive/irreversible state; if none exists, build it via Admin.
+- **Seed via the API by DEFAULT.** Whenever a usable endpoint exists (or can be discovered —
+  see below), seed ALL the data a case needs through the API rather than the UI; it's faster
+  and more reliable. Fall back to the UI only when there is no usable API for that data. A
+  named fixture is still preferred for expensive/irreversible state; if none exists, build
+  it via Admin.
 - **Explore the API to seed:** when the UI is slow or no API is obvious, DISCOVER endpoints —
   an OpenAPI/Swagger spec, the browser network calls made during the equivalent UI action,
   or observed requests — then call them (reusing the logged-in Admin session's auth/token,

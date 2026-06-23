@@ -37,11 +37,12 @@ description: Execute a use case's test cases (plus its regression set) against t
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
    - PROVISION to clear blocks (standing authorization — create what's needed):
-       · Use ADMIN to create/configure prerequisite data & state (prefer the API when
-         faster, else the UI). EXPLORE the API to seed when useful — discover endpoints
-         (Swagger/OpenAPI, browser network calls, observed requests), reuse the Admin
-         session's auth, and record reusable endpoints in `app-map.md`. For references
-         that must pre-exist, create the entity via Admin or use a fixture.
+       · Use ADMIN to create/configure prerequisite data & state. SEED VIA THE API BY
+         DEFAULT — for all the data a case needs, when a usable endpoint exists; discover
+         endpoints if needed (Swagger/OpenAPI, browser network calls, observed requests),
+         reuse the Admin session's auth, and record reusable ones in `app-map.md`. Fall
+         back to the UI only when there's no usable API. For references that must
+         pre-exist, create the entity via Admin or use a fixture.
        · ASSUME realistic synthetic values for any unspecified input (mobile, email,
          name…), tagged `QA_<runid>_` (plain alphanumeric where special chars are
          rejected). No real PII.

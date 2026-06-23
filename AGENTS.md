@@ -86,8 +86,9 @@ Use only the relevant skill:
   requires. Prefer read-only / reversible actions.
 - Never use real PII or production credentials. Test data and test accounts only.
 - **Create the data a case needs rather than blocking:** provision/control via the
-  **Admin** account, assume synthetic values for unspecified inputs (mobile, email…),
-  and create/reference real entities for fields that must pre-exist. Perform the
+  **Admin** account, **seed via the API by default** (UI only when no usable API exists),
+  assume synthetic values for unspecified inputs (mobile, email…), and create/reference
+  real entities for fields that must pre-exist. Perform the
   behaviour under test as the case's role. BLOCKED only when even Admin can't (external
   system / missing capability / irreversible real-world action). Never fabricate the
   expected *result* — only input *values*.

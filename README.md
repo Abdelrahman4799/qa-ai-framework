@@ -24,6 +24,7 @@ documents in. Nothing here invents requirements.
 > **New? Read [ABOUT.md](ABOUT.md)** — the full explainer: what it is, features, why use it.
 > **Why this framework?** See **[OVERVIEW.md](OVERVIEW.md)** — the problems it solves and who it's for.
 > New here? Start with **[QUICKSTART.md](QUICKSTART.md)** — zero to first tested use case.
+> Day-to-day usage? See **[USAGE.md](USAGE.md)** — every skill + the hooks, with prompts.
 > Plugging in your own agents/tools? See **[EXTENDING.md](EXTENDING.md)** — stage contracts and integration patterns.
 
 ## Get the framework

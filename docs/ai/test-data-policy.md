@@ -17,6 +17,8 @@ The rows below are seed defaults — `index-srs` will reconcile them with the SR
 **Admin is the default provisioning / control account.** Create, configure, and clean up
 system state and prerequisite data via Admin (it can control anything in the system).
 Execute the behaviour under test as the case's role — use Admin only for setup/control.
+Seed data **via the API by default** (using the Admin session's auth) whenever an endpoint
+exists; fall back to the UI only when there's no usable API. See `execution-policy.md`.
 
 | Role | Account (.env keys) | Permissions / scope | Notes |
 |------|-------------------|---------------------|-------|
