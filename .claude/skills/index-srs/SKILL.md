@@ -53,6 +53,15 @@ the baseline SRS changes.
    - Note data-scoped rules (e.g. "Manager — own team only") as a `TBD` cell note;
      the grid captures WHO, not WHICH records.
 
+3d. Build the system graph
+   - Build/update `docs/ai/system-graph.md` (compact typed edge list) from the SRS +
+     `decisions.md` + `app-map.md`:
+       · UC depends-on / related (from the index) · UC → actor (roles)
+       · UC → entity (reads/writes) · entity → entity (has-many / refers-to)
+       · entity states · UC → route · entity → API endpoint (seeding)
+   - Mark each edge `✓` (stated) or `?` (inferred). CONFIRM the `?` edges with the user;
+     do not invent structure. Flag ambiguities `TBD`.
+
 4b. Record the fingerprint
    - After writing the index, run:
      `powershell -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/srs_fingerprint.ps1 -Write`
@@ -63,6 +72,7 @@ the baseline SRS changes.
 - Overwrite `docs/ai/srs/_index.md` with the use-case catalog table (incl. Actors).
 - Update the role list in `docs/ai/test-data-policy.md` (merged, credentials preserved).
 - Overwrite `docs/ai/permission-matrix.md` (roles × use cases).
+- Build/update `docs/ai/system-graph.md` (typed edges; inferred edges confirmed).
 - Updated `docs/ai/srs/_fingerprint.json` (stale-index detection).
 - List the TBDs / boundary questions for the team to confirm (incl. roles to add,
   and credentials still to be set per role).

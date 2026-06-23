@@ -124,7 +124,7 @@ See `.claude/skills/self-heal/SKILL.md`.
 ```
 docs/ai/         context · handoff · policies (test-case-standards, execution,
                  defect, devops, test-data) · coverage-dimensions · test-design-techniques ·
-                 decisions · test-fixtures · app-map · permission-matrix · glossary
+                 decisions · test-fixtures · app-map · permission-matrix · system-graph · glossary
                  + srs/ (baseline) and new-feature-srs/ (your documents)
 test-cases/      generated cases (persist, per use case) + traceability + coverage
 sessions/        full per-session records (append-only audit trail)

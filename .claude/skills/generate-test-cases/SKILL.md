@@ -16,6 +16,8 @@ Never generate for the whole SRS.
 - `docs/ai/test-fixtures.md` (named prerequisite states) and `docs/ai/app-map.md`
   (navigation/role paths to reference in Test Data Preparation).
 - `docs/ai/decisions.md` (BA/product rulings not in the SRS — a valid source to cite).
+- `docs/ai/system-graph.md` (traverse the chosen UC's neighborhood — related/dependent
+  UCs, entities, states, reference data).
 
 ## Steps
 
@@ -36,11 +38,12 @@ Never generate for the whole SRS.
    - Note ambiguities as `TBD - needs team confirmation` (or cite a `DEC-###`).
 
 3. DISCOVER related + dependent use cases
-   - From `_index.md`, read the chosen UC's `Depends on` (its prerequisites) and
-     its `Related UCs`. Also find the REVERSE depends-on edges — UCs that list this
-     one as a prerequisite (the impact set).
-   - Match the chosen UC against the index summaries to propose any further UCs it
-     touches (shared entities, flows, screens).
+   - TRAVERSE the system graph (`docs/ai/system-graph.md`): from the chosen UC follow
+     depends-on (prerequisites), reverse depends-on (impact set), related, and shared
+     ENTITY edges to find the true neighborhood — plus the entities it reads/writes and
+     their states (for state-transition coverage) and reference data (for setup).
+   - Cross-check with `_index.md` (`Depends on` / `Related UCs`) and the index summaries;
+     propose any further UCs and CONFIRM. Treat inferred (`?`) graph edges as proposals.
 
 4. CONFIRM with the user
    - "This use case relates to: UC-02, UC-11 — correct?"

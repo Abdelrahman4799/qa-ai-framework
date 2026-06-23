@@ -25,7 +25,7 @@ flowchart TD
     NFS["New-feature SRS<br/>docs/ai/new-feature-srs/"]
 
     SRS --> S1["1 · index-srs<br/>read full SRS ONCE<br/>build UC catalog"]
-    S1 --> IDX[("srs/_index.md<br/>+ _fingerprint.json")]
+    S1 --> IDX[("srs/_index.md · permission-matrix<br/>system-graph · _fingerprint.json")]
 
     NFS --> S2
     IDX --> S2["2 · generate-test-cases<br/>SELECT UC · discover + CONFIRM<br/>walk coverage dimensions · cases + regression"]

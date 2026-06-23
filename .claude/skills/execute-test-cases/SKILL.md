@@ -24,9 +24,10 @@ description: Execute a use case's test cases (plus its regression set) against t
      role each test case specifies (log out/in to switch roles; for concurrency cases
      drive a second session — see "Role switching" / "Multi-session" in execution-policy.md
      and the login path in app-map.md).
-   - ORDER by dependency: from the `Depends on` column, run a use case's
-     prerequisite cases BEFORE it (or establish the prerequisite end-state as the
-     precondition). Stop following a chain at a `TBD`/circular edge and report it.
+   - ORDER by dependency: from the `Depends on` column (and `docs/ai/system-graph.md`),
+     run a use case's prerequisite cases BEFORE it (or establish the prerequisite
+     end-state). The graph also resolves which entities/APIs to seed and in what order.
+     Stop following a chain at a `TBD`/circular edge and report it.
    - FIXTURES: for any case tagged `needs-fixture: <name>`, use the fixture if it exists.
      If it is missing, BUILD the needed state via Admin (standing authorization) rather
      than blocking; only mark BLOCKED if even Admin can't create it.

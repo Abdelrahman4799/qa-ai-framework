@@ -25,6 +25,7 @@ Read extra docs only when relevant:
 - Permissions / roles / test data → `docs/ai/test-data-policy.md` + `docs/ai/permission-matrix.md`
 - Coverage dimensions to walk → `docs/ai/coverage-dimensions.md`
 - How to derive strong cases (techniques) → `docs/ai/test-design-techniques.md`
+- System model to traverse (UCs · entities · states · routes · API) → `docs/ai/system-graph.md`
 - Rulings not in the SRS (BA Q&A) → `docs/ai/decisions.md`
 - Deep / compound prerequisite states → `docs/ai/test-fixtures.md`
 - App navigation / known UI behavior → `docs/ai/app-map.md`
