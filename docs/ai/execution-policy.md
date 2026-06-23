@@ -73,6 +73,19 @@ Standing authorization: **create the data and state a case needs rather than blo
 - Boundaries: only on the environment in `context.md` (never production); tag everything and
   record residue (and anything not cleanly removable) in the run report.
 
+## Pre-execution data preparation
+Before executing any case, run a data-prep pass that GUARANTEES every in-scope case has
+its prerequisite/reference data ready (fresh):
+- Scan all cases' Test Data Preparation + `needs-fixture`/`needs-config` + reference data;
+  reuse fixtures, else create fresh (API by default), tagged `QA_<runid>_`.
+- Only pre-seed prerequisites and reference data — NOT the data a test creates as its own
+  action-under-test (lazy provisioning still covers anything found missing mid-run).
+- Write a **data manifest** (`.qa-state/runs/<runid>/data-manifest.md`): what was created,
+  ids/tags, which case it serves, and anything un-creatable → those cases BLOCKED up front
+  (fail fast) or `needs-live-action` flagged.
+- Benefits: fail-fast on blockers, efficient batch seeding, and parallel runners start from
+  ready, isolated data.
+
 ## Fresh data per run
 - Each run creates its OWN fresh data, tagged with a **unique run id**: `QA_<runid>_…`.
   The `runid` must be unique per run (e.g. a date-time stamp), so created values never
@@ -174,6 +187,7 @@ Standing authorization: **create the data and state a case needs rather than blo
   - Flaky: TC — both attempts
   - Blocked: TC — reason (missing fixture/capability; what provisioning was attempted)
   - Provisioned data: what was created (tag), where, by which role, cleaned up? (y/n)
+  - Data manifest: link to `data-manifest.md` (pre-seeded data + anything un-creatable)
   - Residue: anything left behind or not cleanly removable
   - Evidence folder path
 

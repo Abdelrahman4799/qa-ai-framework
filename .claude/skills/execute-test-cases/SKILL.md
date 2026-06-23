@@ -34,6 +34,21 @@ description: Execute a use case's test cases (plus its regression set) against t
    - Create a run folder: `.qa-state/runs/<runid>/`. Use a UNIQUE runid (date-time stamp)
      and create FRESH data this run, tagged `QA_<runid>_` — never reuse or depend on data
      from a previous run (fixtures are the persistent exception). See "Fresh data per run".
+
+1b. PREPARE TEST DATA (fresh) — BEFORE executing any case
+   - Scan all in-scope cases' "Test Data Preparation", `needs-fixture` / `needs-config`,
+     and reference data. For each required datum:
+       · fixture exists → reuse it;
+       · else CREATE it FRESH this run — API by default (else Admin/UI) — tagged
+         `QA_<runid>_`, assuming synthetic input values.
+   - Do NOT pre-create the data a test must create as its OWN action-under-test — only
+     prerequisites and reference data. (Lazy provisioning in step 2 still covers anything
+     discovered missing mid-run.)
+   - Write a DATA MANIFEST to `.qa-state/runs/<runid>/data-manifest.md`: each datum created
+     (id/tag), which case(s) it serves, and anything that could NOT be created → mark those
+     cases BLOCKED now (fail fast) or flag `needs-live-action` for confirmation.
+   - Parallel runners start from this prepared, isolated data.
+
 2. For each test case (chosen UC cases, then regression set)
    - Bring the app to the precondition state via Playwright MCP.
    - PROVISION to clear blocks (standing authorization — create what's needed):
