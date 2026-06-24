@@ -35,7 +35,9 @@ description: Execute a use case's test cases (plus its regression set) against t
      and create FRESH data this run, tagged `QA_<runid>_` — never reuse or depend on data
      from a previous run (fixtures are the persistent exception). See "Fresh data per run".
 
-1b. PREPARE TEST DATA (fresh) — BEFORE executing any case
+1b. PREPARE TEST DATA (fresh) — AUTOMATIC, before executing any case
+   - Do this WITHOUT being asked — seeding is a default part of every execution run, not an
+     on-request action. Never wait for the user to tell you to seed.
    - Scan all in-scope cases' "Test Data Preparation", `needs-fixture` / `needs-config`,
      and reference data. For each required datum:
        · fixture exists → reuse it;

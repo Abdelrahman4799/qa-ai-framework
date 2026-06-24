@@ -86,8 +86,10 @@ Use only the relevant skill:
   reverse deps, shared entity/state/permission, 1–2 hops), name the impact point and
   design a TARGETED regression case there, plus re-run its core flow. A bare happy-path
   re-run is not sufficient regression.
-- **Test data prep may use the API** when it is faster/available; the behavior under
-  test is still exercised through the UI unless the case is itself an API test.
+- **Seeding is automatic, not on-request:** at the start of execution, prepare/seed the
+  required data by default (API-first, via Admin) — WITHOUT being asked. Never wait for the
+  user to request seeding. The behavior under test is still exercised through the UI unless
+  the case is itself an API test.
 - **Parallel execution:** ask the user how many runners to use; only parallelise
   independent cases and isolate each runner's session/account/data.
 - Never invent requirements. If expected behavior is unclear, missing, or

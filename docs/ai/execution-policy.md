@@ -74,8 +74,10 @@ Standing authorization: **create the data and state a case needs rather than blo
   record residue (and anything not cleanly removable) in the run report.
 
 ## Pre-execution data preparation
-Before executing any case, run a data-prep pass that GUARANTEES every in-scope case has
-its prerequisite/reference data ready (fresh):
+This runs **automatically and unprompted** at the start of every execution run — the agent
+seeds required data by default; the user should not have to ask. Before executing any case,
+run a data-prep pass that GUARANTEES every in-scope case has its prerequisite/reference
+data ready (fresh):
 - Scan all cases' Test Data Preparation + `needs-fixture`/`needs-config` + reference data;
   reuse fixtures, else create fresh (API by default), tagged `QA_<runid>_`.
 - Only pre-seed prerequisites and reference data — NOT the data a test creates as its own
