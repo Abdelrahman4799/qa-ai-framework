@@ -19,6 +19,8 @@ This skill is the ONLY thing that may authorize an upload. On pass it writes
 - [ ] Each test case meets test-case-standards.md (fields, traceability, observable steps).
 - [ ] Each executed result has evidence; FAILs have observed vs expected.
 - [ ] Each defect contradicts the SRS (not assumption), is minimal, classified, de-duplicated.
+- [ ] Each defect has its full report (title/desc/steps/expected/actual/quoted SRS contradiction)
+      AND evidence attachment(s) ready — no bug is uploaded bare.
 - [ ] No real PII; no PAT anywhere.
 - [ ] All `TBD - needs team confirmation` items are listed for the team.
 

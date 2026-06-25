@@ -30,16 +30,22 @@ description: Upload reviewed test cases and defects to Azure DevOps via the REST
    - Test cases → type `Test Case` (fields per devops-policy.md).
    - `POST .../_apis/wit/workitems/$Test Case?api-version=7.1`
      (Content-Type `application/json-patch+json`). Keep a map: TC-ID → work item ID.
-5. Create BUGS and link each to its test case
+5. Create BUGS — with evidence — and link each to its test case
    - For each bug, find its source test case (the TC it came from):
      · if that test case work item already exists (created in step 4 or found via WIQL)
        → create the Bug, then **link it to that test case**;
      · if the source test case does NOT exist yet → create the test case first
        (step 4 flow), then create the Bug and link it.
+   - **ATTACH EVIDENCE — MANDATORY:** every Bug MUST be uploaded WITH its evidence —
+     upload the screenshot(s) (and any failing-step shot / run-report excerpt) via
+     `_apis/wit/attachments`, then attach them to the Bug. A bug is NOT complete (do not
+     consider it uploaded) until its attachment(s) are on the work item. If a bug has no
+     evidence, that's a gap — flag it, don't upload a bare bug.
    - Link type per `devops-policy.md` (e.g. Bug ↔ Test Case "Related", or "Tested By").
    - A bug must never be uploaded unlinked when it has a known source test case.
-6. Attach evidence + remaining relations
-   - Upload screenshots via `_apis/wit/attachments`, link to the work item.
+6. Remaining relations
+   - Link test cases (and bugs) to their requirement / UC / `DEC` work items where the
+     IDs are known.
    - Link test cases (and bugs) to their requirement / UC / `DEC` work items where the
      IDs are known.
    - NEW-FEATURE ↔ BASELINE: link a new-feature use case's test cases to their
@@ -48,6 +54,7 @@ description: Upload reviewed test cases and defects to Azure DevOps via the REST
 
 ## Output (final response)
 - Created / updated work item IDs + URLs (test cases and bugs).
+- Confirm **each bug was uploaded WITH its evidence attachment(s)** (count per bug).
 - Items skipped as duplicates (with existing IDs).
 - Any failures + reason.
 - Confirm the PAT was never emitted.
