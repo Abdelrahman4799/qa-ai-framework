@@ -21,7 +21,8 @@
     steps (`Microsoft.VSTS.TCM.Steps`), links to the requirement/UC work items.
 - Defects → work item type **Bug**
   - Fields: `System.Title`, `Microsoft.VSTS.Common.Severity`, `System.AreaPath`,
-    repro steps (`Microsoft.VSTS.TCM.ReproSteps`), `System.Description`,
+    repro steps (`Microsoft.VSTS.TCM.ReproSteps` — steps + expected + actual),
+    `System.Description` (description + **quoted SRS contradiction** + trace),
     evidence attachments.
 
 ## Endpoints (API 7.1)

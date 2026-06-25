@@ -22,9 +22,12 @@ description: Turn a failed test result into a clean, classified, reproducible de
    - Note reproducibility (always / intermittent / once).
 3. Classify
    - Severity per the scale (S1–S4). Priority — set with the team or mark TBD.
-4. Write the report
-   - Use the defect template in defect-policy.md. Cite expected from the SRS.
-   - Attach evidence paths. No PII, no PAT.
+4. Write the report (full format)
+   - Use the bug template in defect-policy.md — Title, Description, Trace, Steps (with the
+     exact data), Expected, Actual, and the **SRS contradiction QUOTED** (the exact spec
+     statement violated + its location). If nothing in the spec is contradicted, it's not a
+     confirmed bug → `TBD`.
+   - Quote exact UI text in Expected/Actual. Attach evidence. No PII, no PAT.
 5. De-duplicate
    - Check existing defects (and, later, DevOps) for the same symptom;
      merge / reference instead of duplicating.
