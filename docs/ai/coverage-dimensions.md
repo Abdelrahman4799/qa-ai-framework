@@ -65,6 +65,27 @@ For each action a use case offers (save, submit, approve, delete…), verify all
 confirmation dialog → **exact** success/error message (per language) → status transition →
 **audit-log entry** → **page redirection**. These are the items most often skipped.
 
+## Per-page completeness (test EVERY element on each page)
+For each page/screen the use case touches, **enumerate ALL UI elements** and test each —
+don't cover only the happy-path controls:
+- every **field** (input, dropdown, date/time, file, toggle, radio, checkbox) — value,
+  validation, default, enabled/disabled
+- every **button / link / icon / menu / tab** — action it triggers + disabled states
+- **labels & messages** (per language), tooltips, placeholders, required markers
+- table/list controls (sort, filter, paging, row actions, empty state)
+- page-level: title, breadcrumbs, back, help, and any role-conditional elements
+Use the live page (Playwright) and `app-map.md` to enumerate; flag elements the SRS
+doesn't describe as `TBD` rather than skipping them.
+
+## Case complexity (beyond the simple/sample cases)
+Alongside the simple atomic cases, design **complex / composite** cases:
+- full **end-to-end journeys** (multi-step, across pages, to a real outcome)
+- **combined conditions** via decision tables (several rules interacting at once)
+- **interacting fields/parameters** via pairwise (e.g. role × type × state × language)
+- **realistic data combinations** and sequences (not just one field at a time)
+- **cross-feature** flows where this use case feeds or depends on others
+The sample/atomic cases are the floor, not the target.
+
 ## How to use
 - `generate-test-cases` walks this list for each UC and records, per dimension,
   Covered / N/A+reason / Gap.

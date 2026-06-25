@@ -85,10 +85,19 @@ Never generate for the whole SRS.
      message, state, or persisted value) — never "it works".
    - SCENARIOS: cover the MAIN flow, EVERY alternate flow, and EVERY exception/error
      path identified in steps 2 & 6 — not just happy/negative/boundary.
+   - PER-PAGE COMPLETENESS: for each page the UC touches, ENUMERATE every UI element
+     (fields, buttons, links, menus, tabs, dropdowns, toggles, icons, labels/messages,
+     table controls) and cover each — presence, states, validation, and the action it
+     triggers. Test everything on the page, not only the happy-path controls
+     (see "Per-page completeness" in coverage-dimensions.md).
    - PER-ACTION: for each action, cover the verification checklist in
      `coverage-dimensions.md` (confirmation dialog → exact message → status transition →
      audit-log entry → page redirection). Expected results QUOTE the exact UI text (per
      language) when checking a message — never paraphrase.
+   - COMPLEXITY: beside the simple atomic cases, design COMPLEX/composite cases —
+     end-to-end journeys, decision-table combinations, pairwise interactions, realistic
+     data sequences, and cross-feature flows (see "Case complexity"). Atomic cases are
+     the floor, not the target.
    - Write each step with its OWN expected result (per-step oracle) — the CSV is step-per-row.
    - NEGATIVE (where applicable): for inputs, actions, and rules that can fail, generate
      the negative/invalid counterpart too — see the negative checklist in
@@ -185,6 +194,8 @@ Never generate for the whole SRS.
          vague steps, and weak/imprecise expected results ("works", "no error").
          For EACH impacted related UC, check it has BOTH a core re-run AND a targeted
          regression case at the impact point — flag any impacted UC with only a re-run.
+         Check EVERY page element is covered and that COMPLEX/composite cases exist (not
+         only simple atomic ones) — flag pages with untested elements or no complex case.
       2. Add or STRENGTHEN cases to close each gap — concrete values, precise oracles;
          re-save and update traceability.
       3. Re-check. Stop only when the critique finds nothing, or after 3 rounds (report

@@ -74,6 +74,9 @@ Use only the relevant skill:
   — ask or log to `decisions.md`; never write vague cases on missing info. Expected results
   **quote the exact UI message text** (per language); per action verify dialog / message /
   status / audit entry / redirection.
+- **Test every element on each page**, and include **complex/composite** cases (end-to-end
+  journeys, decision-table & pairwise combinations, cross-feature flows) — not just the
+  simple sample cases.
 - **Design strong cases, not shallow ones:** apply test-design techniques
   (`test-design-techniques.md`) — equivalence partitioning, boundary analysis, decision
   tables, state-transition, pairwise — with concrete values and a precise expected
