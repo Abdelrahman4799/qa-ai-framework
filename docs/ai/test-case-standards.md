@@ -19,9 +19,9 @@
 - **Test Data Preparation** — the explicit build / navigation path to reach the
   precondition (cite `app-map.md` routes; fixtures; or setup created via Admin).
   For **free-input fields** (mobile, email, name, address…), assume realistic SYNTHETIC
-  values tagged `QA_<runid>_`. For fields that must reference an **existing entity/option**,
-  create it (via Admin) or use a fixture — never reference a value that must pre-exist
-  without ensuring it exists. No real PII.
+  values tagged `QA_<runid>_`. For fields that reference another **entity/option**, CREATE
+  that entity new — do NOT select a pre-existing record; use a fixture only for
+  deep/irreversible state. Always create new data; never reuse existing records. No real PII.
 - Steps (numbered, one UI-observable action each, executable by Playwright MCP), with a
   **per-step expected result**
 - Expected result (taken from the SRS / new-feature SRS / a `DEC-###` — cite the source).

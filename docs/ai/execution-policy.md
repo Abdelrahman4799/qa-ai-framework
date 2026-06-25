@@ -88,15 +88,20 @@ data ready (fresh):
 - Benefits: fail-fast on blockers, efficient batch seeding, and parallel runners start from
   ready, isolated data.
 
-## Fresh data per run
-- Each run creates its OWN fresh data, tagged with a **unique run id**: `QA_<runid>_…`.
-  The `runid` must be unique per run (e.g. a date-time stamp), so created values never
-  collide with earlier runs — important for unique fields (names, emails, codes).
-- **Never reuse or depend on data from a PREVIOUS run** — it may be gone or changed. Don't
-  assume "the record I made last time" exists; create what this run needs.
-- **Exception — fixtures:** named fixtures (`test-fixtures.md`) are intentionally persistent
-  shared seed states; they are NOT regenerated each run — reuse them as-is.
-- Clean up this run's created data when feasible; record residue.
+## Always create new data
+- **ALWAYS CREATE the data a test needs — never reuse or act on PRE-EXISTING records.** Do
+  not pick an existing row from a list, do not use demo/seed data left by others, and do not
+  reuse data from a previous run. Create your own.
+- Tag everything `QA_<runid>_` with a **unique run id** (date-time stamp) so values never
+  collide with earlier runs (important for unique fields — names, emails, codes).
+- "Existing data" = anything THIS run did not create. **Reusing data THIS run already
+  created** (the data manifest / `QA_<runid>_` items) across its own cases is fine — that's
+  still new data, created once this run.
+- For a field that references another entity, **create that entity new too** — don't select
+  an existing one.
+- **Only exception — fixtures:** named deep/irreversible shared state (`test-fixtures.md`).
+  Create it fresh where feasible; otherwise reuse the fixture and note it.
+- Clean up created data when feasible; record residue.
 
 ## Data & Safety
 - Use only designated test accounts / data. No real PII.
